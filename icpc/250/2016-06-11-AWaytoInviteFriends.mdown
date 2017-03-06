@@ -1,0 +1,75 @@
+---
+layout: post
+title: 友達の誘い方 AOJ-2331
+date: 2016-06-10 03:10:10
+tags: ICPC AOJ
+description: 実装は簡単だが、解法が難しい
+---
+
+[問題](http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2331)
+
+## 問題
+友達の情報が与えられ、それぞれの友達はa人以上b人以下の人としか、遊びたくないという情報が与えられる。それをうまく考慮して、友達を誘うとき、何人の友達を最大で連れていけるかを求める問題
+
+## 考え方
+`come[i]`に与えられた`a,b`の情報からi人(自分をふくめて)で海にいくとき、ついてきてくれる友達の数を記録していく。その配列には、本人(ホスト)も含めてi人であれば来てくれる友達の数を示すので、i人で来てくれる友達と本人の総計がそのiを超えているかどうかを調べればいい。(ここの考えが難し買った。)ですので、`come[i] + 1 >= i`を満たすものの最大を探せばいい。
+※i人なら来てくれる友達が存在しても、実際にこれる人数はその数を超えるかはわかっていない。
+
+## ミス
+この問題を解く前にdpの問題を解いたので、完全にdpの先入観でやられた。
+
+## コード
+
+{% highlight c++ %}
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <functional>
+#include <vector>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
+using namespace std;
+typedef long long ll;
+typedef pair<int,int> pint;
+typedef vector<int> vint;
+typedef vector<pint> vpint;
+#define mp make_pair
+#define fi first
+#define se second
+#define all(v) (v).begin(),(v).end()
+#define rep(i,n) for(int i=0;i<(n);i++)
+#define reps(i,f,n) for(int i=(f);i<(n);i++)
+
+int main(void){
+	//come[i] i人(自分をふくめて)で海にいくとき、ついてきてくれる友達の数
+	int come[100010];
+
+	rep(i, 100010) come[i] = 0;//0で初期化
+
+	int n; scanf("%d", &n);
+	rep(i, n){
+		int a, b;
+		scanf("%d %d", &a, &b);
+		reps(j, a, b + 1){
+			come[j]++;
+		}
+	}
+
+	
+	int ans = 0;
+	reps(i, 2, 100010){
+		//今調べているは自分も含めてi人であれば来てくれる友達が、
+		//come[i]人いるいるので、come[i] + 1人がi人を超えているかを確かめる
+		if(come[i] + 1 >= i){
+			//自分も含めてi人であれば来てくれるという条件を満たすので、
+			//実際に来てくれる友達の数はi-1人
+			ans = max(ans, i - 1);
+		}
+	}
+	printf("%d\n", ans);
+
+	return 0;
+}
+{% endhighlight c++ %}

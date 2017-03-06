@@ -1,0 +1,73 @@
+D - 食塩水
+時間制限 : 2sec / スタック制限 : 256MB / メモリ制限 : 256MB
+
+問題文
+食塩水が入った容器が N 個あります。 容器には 1 から N までの番号がついています。 i 番の容器には濃度 pi パーセントの食塩水が wi グラム入っています。 高橋君は、K 個の容器を選び、選んだ容器の中に入っている食塩水をすべて混ぜ合わせることにしました。高橋君の混ぜた食塩水の濃度として考えられる最大値を求めてください。
+入力
+入力は以下の形式で標準入力から与えられる。
+
+K N
+w1 p1
+…
+wN pN
+1≤K,N≤1000 をみたす。
+1≤wi≤109 をみたす。
+0≤pi≤100 をみたす。
+出力
+高橋君の混ぜた食塩水の濃度として考えられる最大値を出力せよ。 出力の末尾には改行を入れること。
+入力例1
+3 2
+100 15
+300 20
+200 30
+出力例1
+25.000000000
+
+
+
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include <algorithm>
+using namespace std;
+#define eps 1e-1
+ 
+//容器の個数、選ぶ容器の個数
+int n,k;
+int w[1010],p[1010];
+ 
+bool ok(double ans)
+{
+	//int pointer = 0;
+	vector<double> salt(n);
+ 
+	for(int i=0;i<n;i++)
+	{
+		salt[i] = w[i]*(p[i]-ans)/100;
+	}
+	sort(salt.rbegin(),salt.rend());
+ 
+	double sum = 0.0;
+	for(int i=0;i<k;i++)
+	{
+		sum+=salt[i];
+	}
+	return (sum>=0);
+}
+int main()
+{
+	cin>>n>>k;
+	for(int i=0;i<n;i++)
+	{	//w[i]グラムの食塩水　p[i]の濃度
+		cin>>w[i]>>p[i];
+	}
+ 
+	//混ぜ合わせた食塩水の最大の濃度
+	double l=0,h=100;
+	double m=h;
+	for(int i=0;i<100;i++)
+	{	
+		m=(h+l)/2;
+		if(ok(m))l=m;else h=m;
+	}
+	cout<<fixed<<setprecision(9)<<(h+l)/2<<endl;

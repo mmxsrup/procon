@@ -1,0 +1,43 @@
+P#include <iostream>
+#include <vector>
+#include <cstdio>
+#include <string>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+#define rep(i,n) for(int i=0;i<(n);i++)
+
+
+int main(void){
+	int n; cin >> n;
+	vector<string> s(n);
+	rep(i, n) cin >> s[i];
+	string t;
+
+	int sum = 0;
+	rep(i, n){
+		sum += s[i].size();
+	}
+
+	sort(s.begin(), s.end());
+	rep(i, sum){
+		rep(j, n){
+			if(!s[j].empty()){
+				t += s[j][0];
+				s[j].erase(s[j].begin());
+				break;
+			}
+		}
+		printf("1\n");
+		rep(k, n){
+			cout << s[k] << endl;
+		}
+		sort(s.begin(), s.end());
+		printf("2\n");
+		rep(k, n){
+			cout << s[k] << endl;
+		}
+	}
+	cout << t << endl;
+	return 0;
+}

@@ -1,0 +1,12 @@
+<a href="">問題</a>
+#問題概要
+
+#解法
+この解説がわかりやすい<a href="https://speakerdeck.com/kagamiz/aoj-0557-a-first-grader-jie-shuo">解説</a>
+
+#ミス
+
+#コード
+```cpp
+
+```]

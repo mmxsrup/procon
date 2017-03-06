@@ -1,0 +1,60 @@
+<a href="http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=0546">問題</a>
+#問題概要
+与えられる文字列(数字)n個の中からk個選んで、つなげることで、できあがる文字列の種類を求める。
+
+#解法
+next_permutationを使い、すべての順列を作る。その順列すべてに対して、前からk個選んで選んだ順番に文字列としてつなげる。そのようにすることで、すべて文字列を生成できる。ただし、そのようにやると、dataの中に同じ数字があり、重複した文字列も生成してしまう可能性があるので、できた文字列はsetに入れることで、重複して数えることを防ぐことができる。
+例data{1, 2, 3} k = 2の時、生成される順列は 
+{1, 2, 3}
+{1, 3, 2}
+{2, 1, 3}
+{2, 3, 1}
+{3, 1, 2}
+{3, 2, 1}
+となり、前からk個選ぶできあがる文字列は
+{1, 2}
+{1, 3}
+{2, 1}
+{2, 3}
+{3, 1}
+{3, 2}
+
+#ミス
+next_permutaionを少し勘違いしてた。
+
+#コード
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <set>
+#include <cstring>
+using namespace std;
+#define rep(i,n) for(int i=0;i<(n);i++)
+#define reps(i,f,n) for(int i=(f);i<(n);i++)
+
+int main(void){
+	while(1){
+		int n, k;
+		scanf("%d %d", &n, &k);
+		if(n == 0 && k == 0) return 0;
+		//数字を文字列として扱う
+		vector<string> data(n);//入力データを入れる
+		set<string> num;//k個選んでできたものを入れる
+		rep(i, n) cin >> data[i];
+		
+		sort(data.begin(), data.end());//昇順にしておく
+		//next_permutaionで全順列を生成
+		do{
+			string tmp;
+			//順列の前からk個をくっつける
+			rep(i, k){
+				tmp += data[i];
+			}
+			//setに入れることで、同じものをカウントしないようにする
+			num.insert(tmp);
+		}while(next_permutation(data.begin(), data.end()));
+		printf("%lu\n", num.size());//個数を表示
+	}
+}
+```]

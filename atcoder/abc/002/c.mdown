@@ -1,0 +1,33 @@
+<a href="http://abc002.contest.atcoder.jp/tasks/abc002_3">問題</a>
+#問題概要
+３つの座標が与えられる。その３点を頂点とする三角形の面積を求める問題。
+
+#解法
+3 点 (0,0), (a,b), (c,d) で構成される三角形の面積は、|ad−bc|⁄2という公式で求められる。この公式を用いるため、三角形の頂点の１つが原点になるように平行移動すればいい。
+
+#ミス
+特になし。
+
+#コード
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <functional>
+#include <vector>
+#include <cmath>
+using namespace std;
+#define rep(i,n) for(int i=0;i<(n);i++)
+#define reps(i,f,n) for(int i=(f);i<(n);i++)
+
+int main(void){
+	double xa, xb, xc, ya, yb, yc;
+	cin >> xa >> ya >> xb >> yb >> xc >> yc;
+	xb -= xa; xc -= xa;
+	yb -= ya; yc -= ya;
+	xa = 0; ya = 0;
+	double s;
+	s = abs(xb * yc - xc * yb) * 0.5;
+	printf("%.4f\n", s);
+	return 0;
+}
+```]

@@ -1,0 +1,60 @@
+<a href="http://yukicoder.me/problems/no/300">問題</a>
+#問題概要
+X * Y = Z^2を満たすような最小のYを見つける問題。
+
+#解法
+小さい約数から順番に割っていく。その時に同じ約数で何回割ったかで場合分けする。もし同じ数字で割った割った回数が偶数回のときはその数をYにかける(Yの約数として入れる)。それを繰り返せばYが求まる。
+
+#ミス
+オーバーフローで1WA
+
+#コード
+```cpp
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <functional>
+#include <vector>
+#include <bitset>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
+typedef long long ll;
+using namespace std;
+#define rep(i,n) for(int i=0;i<(n);i++)
+#define reps(i,f,n) for(int i=(f);i<(n);i++)
+
+int main(void){
+    ll x;
+    ll y = 1;
+    //ll z;
+    cin >> x;
+
+    for (ll i = 2; i * i <= x; ++i){
+        ll cnt = 0;
+        while(x % i == 0){
+            //割り切れるまで割っていく
+            x /= i;
+            cnt++;
+        }
+
+        if (cnt % 2 != 0){//因数が奇数個しかない時
+            y *= i; //足りない因数をyに持って行く
+            //printf("%lld %lld %lld\n", i, cnt, x);
+        }
+    }
+
+
+    if(x > 1)
+        y *= x;
+    /*もともとのxの因数の中で２つ持つ可能性のある因数の最大値は√x　であるので、
+    調べるのはi * i <= xまででよく それまでに割り切られなかったもので最後まで残っている因数は
+    もともとのx自体で因数を２つ以上持つことはないので、その分は自動的にyに入れてあげればいい
+    */
+
+    printf("%lld\n", y);
+
+    return 0;
+}
+```]

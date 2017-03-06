@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <functional>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <set>
+#include <bitset>
+#include <map>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cmath>
+using namespace std;
+typedef long long ll;
+typedef pair<int,int> pint;
+typedef vector<int> vint;
+typedef vector<pint> vpint;
+#define mp make_pair
+#define fi first
+#define se second
+#define all(v) (v).begin(),(v).end()
+#define rep(i,n) for(int i=0;i<(n);i++)
+#define reps(i,f,n) for(int i=(f);i<(n);i++)
+
+void slove(void){
+	set<string> S;
+	string s, revs;
+	cin >> s;
+	int size = s.size();
+	for (int i = size - 1; i >= 0; --i) revs += s[i];
+
+	reps(i, 1, size){//文字列をどの位置できるか
+		string s1, s2, revs1, revs2;
+		s1 = s.substr(0, i);//前半部分
+		s2 = s.substr(i);//後半部分
+		revs2 = revs.substr(0, size - i);//後半逆ver
+		revs1 = revs.substr(size - i);//前半逆ver
+		//cout << i << s1 << endl << s2 << endl << revs1 << endl << revs2 << endl;
+		//８個の組み合わせがある
+		S.insert(s1 + s2);
+		S.insert(s2 + s1);
+		S.insert(s1 + revs2);
+		S.insert(revs2 + s1);
+		S.insert(revs1 + s2);
+		S.insert(s2 + revs1);
+		S.insert(revs1 + revs2);
+		S.insert(revs2 + revs1);
+	}
+	cout << S.size() << endl;
+	return;
+}
+
+int main(void){
+	int n;
+	cin >> n;
+	rep(i, n) slove();
+
+	return 0;
+}
