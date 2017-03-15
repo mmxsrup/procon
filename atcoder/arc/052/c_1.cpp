@@ -25,7 +25,6 @@ int c[100010], b[100010], a[100010];
 vector<pair<int, int>> G[10010];
 ll dist[10010][2000];
 
-//WA なぜ
 const int MAX_N = 10010;
 typedef tuple<int, int, int> tup;
 void dijkstra(int start){
