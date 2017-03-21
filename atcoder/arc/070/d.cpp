@@ -19,16 +19,37 @@ typedef vector<pint> vpint;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
- 
-int main(void){
-	ll x; cin >> x;
-	ll sum = 0;
-	rep(i, INF){
-		sum += i + 1;
-		if(sum >= x){
-			printf("%d\n", i + 1);
-			return 0;
-		}
+
+int N, K;
+int a[5010];
+
+bool dp[5010][5010]; //dp[i][j] := i番目までを考えて,合計がjの時があるなら1
+bool solve(int idx){
+	rep(i, 5010)rep(j, 5010) dp[i][j] = 0;
+	dp[0][0] = 1;
+	rep(i, N)rep(j, K + 1){
+		if(dp[i][j] == 0) continue;
+		dp[i + 1][j] = 1;
+		if(i == idx) continue;
+		if(j + a[i] > K) continue;
+		dp[i + 1][j + a[i]] = 1;
 	}
+	reps(i, max(0, K - a[idx]), K){
+		if(dp[N][i]) return true;
+	}
+	return false;
+}
+
+int main(void){
+	cin >> N >> K;
+	rep(i, N) cin >> a[i];
+	sort(a, a + N);
+	int l = -1, r = N;
+	while(r - l > 1){ //[l, r)
+		int m = (l + r) / 2;
+		if(!solve(m)) l = m;
+		else r = m;
+	}
+	printf("%d\n", l + 1);
 	return 0;
 }

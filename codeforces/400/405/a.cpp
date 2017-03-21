@@ -19,16 +19,16 @@ typedef vector<pint> vpint;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
- 
+
 int main(void){
-	ll x; cin >> x;
-	ll sum = 0;
-	rep(i, INF){
-		sum += i + 1;
-		if(sum >= x){
-			printf("%d\n", i + 1);
+	int a, b; cin >> a >> b;
+	rep(i, 1000000){
+		if(a > b){
+			printf("%d\n", i);
 			return 0;
 		}
+		a *= 3;
+		b *= 2;
 	}
 	return 0;
 }

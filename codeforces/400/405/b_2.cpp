@@ -20,36 +20,30 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int N, K;
-int a[5010];
+int n, m;
+vector<int> G[200100];
+set<pair<int, int>> se;
 
-bool dp[5010][5010]; //dp[i][j] := i番目までを考えて,合計がjの時があるなら1
-bool solve(int idx){
-	rep(i, 5010)rep(j, 5010) dp[i][j] = 0;
-	dp[0][0] = 1;
-	rep(i, N)rep(j, K + 1){
-		if(dp[i][j] == 0) continue;
-		dp[i + 1][j] = 1;
-		if(j + a[i] > K) continue;
-		dp[i + 1][j + a[i]] = 1;
-	}
-	reps(i, max(0, K - a[idx]), K){
-		if(dp[N][i]) return true;
-	}
-	return false;
-}
 
 int main(void){
-	cin >> N >> K;
-	rep(i, N) cin >> a[i];
-	sort(a, a + N);
-	int l = 0, r = N;
-	while(r - l > 1){
-		int m = (l + r) / 2;
-		// printf("m %d\n",m );
-		if(!solve(m)) l = m;
-		else r = m;
+	scanf("%d %d", &n, &m);
+	rep(i, m){
+		int a, b; scanf("%d %d", &a, &b);
+		a--; b--;
+		G[a].pb(b); G[b].pb(a);
+		se.insert(mp(a, b)); se.insert(mp(b, a));
 	}
-	printf("%d\n", l + 1);
+	rep(i, n){
+		rep(s, G[i].size()){
+			reps(t, s + 1, G[i].size()){
+				// printf("i %d %d %d\n", i, s, t);
+				if(!se.count(mp(G[i][s], G[i][t]))){
+					printf("NO\n");
+					return 0;
+				}
+			}
+		}
+	}
+	printf("YES\n");
 	return 0;
 }

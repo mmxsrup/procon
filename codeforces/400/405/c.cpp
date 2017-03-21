@@ -19,16 +19,12 @@ typedef vector<pint> vpint;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
- 
+
+string s[] = {A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
+Aa, Ba, Ca, Da, Ea, Fa, Ga, Ha, Ia, Ja, Ka, La, Ma, Na, Oa, Pa, Qa, Ra, 
+Sa, Ta, Ua, Va, Wa, Xa, Ya, Za};
+
 int main(void){
-	ll x; cin >> x;
-	ll sum = 0;
-	rep(i, INF){
-		sum += i + 1;
-		if(sum >= x){
-			printf("%d\n", i + 1);
-			return 0;
-		}
-	}
+
 	return 0;
 }

@@ -19,16 +19,40 @@ typedef vector<pint> vpint;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
- 
-int main(void){
-	ll x; cin >> x;
-	ll sum = 0;
-	rep(i, INF){
-		sum += i + 1;
-		if(sum >= x){
-			printf("%d\n", i + 1);
-			return 0;
-		}
+
+int n, m;
+vector<int> G[200100];
+set<pair<int, int>> se;
+
+bool flag = true;
+void dfs(int now, int pre, int cnt, int start){
+	if(cnt >= 3) return;
+	if(cnt == 2){
+		if(!se.count(mp(now, start))){flag = false; return;}
+		else return;
 	}
+	for(auto nex : G[now]){
+		if(nex == pre) continue;
+		dfs(nex, now, cnt + 1, start);
+	}
+	return;
+}
+
+int main(void){
+	scanf("%d %d", &n, &m);
+	rep(i, m){
+		int a, b; scanf("%d %d", &a, &b);
+		a--; b--;
+		G[a].pb(b); G[b].pb(a);
+		se.insert(mp(a, b)); se.insert(mp(b, a));
+	}
+	rep(i, n){
+		dfs(i, -1, 0, i);
+	}
+	if(!flag){
+		printf("NO\n");
+		return 0;
+	}
+	printf("YES\n");
 	return 0;
 }
