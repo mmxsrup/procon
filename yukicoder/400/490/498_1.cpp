@@ -24,25 +24,11 @@ int Gx, Gy, K;
 int x[6], y[6], N[6];
 map<pair<int, int>, int> mpp;
 vector<tuple<int, int, int>> v;
-vector<int> fin;
 set<vector<int>> ans;
 
-void slv(vector<int> g, int nx, int ny){
-	if(nx == Gx && ny == Gy) ans.insert(g);
-	if(g == fin) return;
-	// printf("%d %d\n", g[0], g[1]);
-	rep(i, K){
-		int tx, ty, tN; tie(tx, ty, tN) = v[i];
-		if(g[i] < tN){
-			auto tmp = g;
-			tmp[i]++;
-			slv(tmp, nx + tx, ny + ty);
-		}
-	}
-}
+vector<vector<int>> itiran;
 
-
-const int MAX_N = 20;
+const int MAX_N = 2000000;
 ll inv[MAX_N + 10];
 ll fac[MAX_N + 10], facInv[MAX_N + 10];
 class MATH{
@@ -88,6 +74,18 @@ private:
 	}
 };
 
+vector<vector<int>> itiran;
+void dfs(vector<int> vd, int nx ,int ny, int cnt){
+	if(cnt == itiran.size()){
+		if(ny == Gy && nx == Gx) ans.pb(vd);
+		else return;
+	}
+	rep(i, itiran[cnt].size()){
+		auto tm = vd;
+		tm.pb(i);
+		dfs(tm, nx + )
+	}
+}
 
 int main(void){
 	cin >> Gx >> Gy >> K;
@@ -96,11 +94,17 @@ int main(void){
 	for(auto u : mpp){
 		v.pb(make_tuple(u.fi.fi, u.fi.se, u.se));
 	}
+	rep(i, v.size()){
+		int tx, ty, tN; tie(tx, ty, tN) = v[i];
+		vector<int> tm;
+		rep(j, tN + 1){
+			tm.pb(mp(tx * j, ty * j));
+		}
+		itiran.pb(tm);
+	}
 	vector<int> t;
-	rep(i, K) t.pb(0);
-	rep(i, K) fin.pb(N[i]);
-	slv(t, 0, 0);
-	ll ret = 0;
+	dfs(t, 0, 0, 0);
+
 	MATH mt;
 	for(auto r : ans){
 		int d = 0;

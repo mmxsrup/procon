@@ -20,29 +20,7 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int Gx, Gy, K;
-int x[6], y[6], N[6];
-map<pair<int, int>, int> mpp;
-vector<tuple<int, int, int>> v;
-vector<int> fin;
-set<vector<int>> ans;
-
-void slv(vector<int> g, int nx, int ny){
-	if(nx == Gx && ny == Gy) ans.insert(g);
-	if(g == fin) return;
-	// printf("%d %d\n", g[0], g[1]);
-	rep(i, K){
-		int tx, ty, tN; tie(tx, ty, tN) = v[i];
-		if(g[i] < tN){
-			auto tmp = g;
-			tmp[i]++;
-			slv(tmp, nx + tx, ny + ty);
-		}
-	}
-}
-
-
-const int MAX_N = 20;
+const int MAX_N = 200;
 ll inv[MAX_N + 10];
 ll fac[MAX_N + 10], facInv[MAX_N + 10];
 class MATH{
@@ -88,37 +66,34 @@ private:
 	}
 };
 
+int Gx, Gy, K;
+int x[6], y[6], N[6];
+
+ll ans = 0;
+int use[10];
+void dfs(int cnt, int nx, int ny){
+	if(cnt == K){
+		if(nx == Gx && ny == Gy){
+			// rep(i, cnt) printf("%d ", use[i]);
+			ll n = 0, ret = 1;
+			rep(i, cnt) n += use[i];
+			ret *= fac[n];
+			rep(i, cnt) if(use[i] != 0)ret *= facInv[use[i]], ret %= MOD;
+			ans += ret; ans %= MOD;
+		}
+		return;
+	}
+	rep(i, N[cnt] + 1){
+		use[cnt] = i;
+		dfs(cnt + 1, nx + i * x[cnt], ny + i * y[cnt]);
+	}
+}
 
 int main(void){
 	cin >> Gx >> Gy >> K;
 	rep(i, K) cin >> x[i] >> y[i] >> N[i];
-	rep(i, K) mpp[mp(x[i], y[i])] += N[i];
-	for(auto u : mpp){
-		v.pb(make_tuple(u.fi.fi, u.fi.se, u.se));
-	}
-	vector<int> t;
-	rep(i, K) t.pb(0);
-	rep(i, K) fin.pb(N[i]);
-	slv(t, 0, 0);
-	ll ret = 0;
 	MATH mt;
-	for(auto r : ans){
-		int d = 0;
-		ll anstmp = 0;
-		rep(i, r.size()){
-			d += r[i];
-			// printf("%d ", r[i]);
-		}
-		// printf("\n");
-		anstmp = fac[d];
-		anstmp %= MOD;
-		rep(i, r.size()){
-			anstmp *= facInv[r[i]];
-			anstmp %= MOD;
-		}
-		ret += anstmp;
-		ret %= MOD;
-	}
-	cout << ret << endl;
+	dfs(0, 0, 0);
+	printf("%lld\n", ans);
 	return 0;
 }
