@@ -19,7 +19,13 @@ typedef vector<pint> vpint;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
- 
+
+struct RMQ {
+	using T = int;
+	T operator()(const T& a, const T& b) { return a < b ? a : b; }
+	static constexpr T identity() { return INT_MAX; }
+};
+
 template <class T> //T : dat[]の中身の型
 class segtree{
 public:
@@ -35,8 +41,7 @@ public:
 		dat.resize(n * 2, neutral); //初期値
 	}
 	void update(int k, T val){ // k番目の値(0-indexed)を val に変更
-		k += n;
-		dat[k] = val;
+		dat[k += n] = val;
 		while(k > 1){
 			k >>= 1;
 			dat[k] = func(dat[k * 2], dat[k * 2 + 1]); //結合法則を考える
@@ -51,7 +56,7 @@ public:
 		return ret;
 	}
 };
- 
+
 ll N; int M;
 ll p[100010];
 double a[100010], b[100010];
@@ -62,12 +67,12 @@ int main(void){
 	rep(i, M) v[i] = p[i];
 	sort(all(v));
 	v.erase(unique(v.begin(), v.end()), v.end());
-	segtree<pair<double, double>> seg((int)v.size() * 2, make_pair(1.0, 0.0));
+	segtree<pair<double, double>> seg(M, make_pair(1.0, 0.0));
 	double mi = 1, ma = 1;
 	rep(i, M){
 		int idx = lower_bound(all(v), p[i]) - v.begin();
 		seg.update(idx, make_pair(a[i], b[i]));
-		auto f = seg.query(0, (int)v.size() * 2);
+		auto f = seg.query(0, M);
 		double ret = 1.0 * f.fi + f.se;
 		chmin(mi, ret); chmax(ma, ret);
 	}
