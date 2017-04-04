@@ -52,19 +52,19 @@ void iskiken(void){
 
 
 const int MAX_N = 200010;
-vector<pair<int, int> > G[MAX_N];
-vector<int> dijkstra(int start){
-	vector<int> dist(MAX_N, INF);
+vector<pair<int, ll> > G[MAX_N];
+vector<ll> dijkstra(int start){
+	vector<ll> dist(MAX_N, INFF);
 	dist[start] = 0;//dist[i] :=　start->iまでの最短距離
-	priority_queue<pair<int, int>, vector<pair<int, int> >, greater<pair<int, int> > >  que;
+	priority_queue<pair<ll, int>, vector<pair<ll, int> >, greater<pair<ll, int> > >  que;
 	que.push(make_pair(0, start));
 	while(!que.empty()){
-		int cost, u, t;//今までにかかった時間 現在の頂点
+		ll cost; int u;//今までにかかった時間 現在の頂点
 		cost = que.top().first, u = que.top().second;
 		que.pop();
 		if(dist[u] < cost) continue;
 		for (auto tmp : G[u]){
-			int v = tmp.first, time = tmp.second;//隣接する頂点 その頂点まで行く時間
+			int v = tmp.first; ll time = tmp.second;//隣接する頂点 その頂点まで行く時間
 			if(dist[v] > dist[u] + time){//u->v
 				dist[v] = dist[u] + time;
 				que.push(make_pair(dist[v], v));
@@ -85,15 +85,15 @@ int main(void){
 	iskiken();
 
 	rep(i, M){
+		if(mC.count(A[i]) != 0 || mC.count(B[i]) != 0) continue;
 		if(A[i] == N - 1) G[B[i]].pb(mp(A[i], 0));
 		else if(B[i] == N - 1) G[A[i]].pb(mp(B[i], 0));
 		else{
-			if(mC.count(A[i]) != 0 || mC.count(B[i]) != 0) continue;
 			G[A[i]].pb(mp(B[i], kiken[B[i]] ? Q : P));
 			G[B[i]].pb(mp(A[i], kiken[A[i]] ? Q : P));
 		}
 	}
 	auto ret = dijkstra(0);
-	printf("%d\n", ret[N - 1]);
+	printf("%lld\n", ret[N - 1]);
 	return 0;
 }

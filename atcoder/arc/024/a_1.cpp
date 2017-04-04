@@ -20,39 +20,21 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-bool flag = false;
-void dfs(string s){
-	if(s.size() < 3) return;
-	if(s == "ABC"){
-		// cout << s << endl;
-		flag = true; return;
-	}
-	static string b[] = {"A", "B", "C"};
-	rep(k, 3){
-		string t = s;
-		bool f = false;
-		/* すべての"ABC"をb[k]日間したら, 置換後の文字列にb[k]は含まれていてはだめ */
-		int cnt = 0;
-		rep(i, t.size()){
-			if(i < t.size() - 2 && t[i] == 'A' && t[i + 1] == 'B' && t[i + 2] == 'C'){
-				f = true;
-				t.replace(i, 3, b[k]);
-			}else if(t[i] == "ABC"[k]){
-				cnt++;
-			}
-		}
-		if(f && cnt == 0){
-			// cout << t << endl;
-			dfs(t);
-		}
-	}
-	return;
-}
-
 int main(void){
-	string s; cin >> s;
-	dfs(s);
-	if(flag) printf("Yes\n");
-	else printf("No\n");
+	map<int, int> a, b;
+	int L, R; cin >> L >> R;
+	rep(i, L){
+		int l; cin >> l;
+		a[l]++;
+	}
+	rep(i, R){
+		int r; cin >> r;
+		b[r]++;
+	}
+	int ans = 0;
+	reps(i, 10, 41){
+		ans += chmin(a[i], b[i]);
+	}
+	printf("%d\n", ans);	
 	return 0;
 }

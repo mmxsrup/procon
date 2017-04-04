@@ -20,39 +20,32 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-bool flag = false;
-void dfs(string s){
-	if(s.size() < 3) return;
-	if(s == "ABC"){
-		// cout << s << endl;
-		flag = true; return;
-	}
-	static string b[] = {"A", "B", "C"};
-	rep(k, 3){
-		string t = s;
-		bool f = false;
-		/* すべての"ABC"をb[k]日間したら, 置換後の文字列にb[k]は含まれていてはだめ */
-		int cnt = 0;
-		rep(i, t.size()){
-			if(i < t.size() - 2 && t[i] == 'A' && t[i + 1] == 'B' && t[i + 2] == 'C'){
-				f = true;
-				t.replace(i, 3, b[k]);
-			}else if(t[i] == "ABC"[k]){
-				cnt++;
-			}
-		}
-		if(f && cnt == 0){
-			// cout << t << endl;
-			dfs(t);
-		}
-	}
-	return;
-}
+int N;
+int color[100010];
 
 int main(void){
-	string s; cin >> s;
-	dfs(s);
-	if(flag) printf("Yes\n");
-	else printf("No\n");
+	cin >> N;
+	rep(i, N) cin >> color[i];
+	int start = -1;
+	rep(i, N){
+		if(color[i % N] != color[(i + 1) % N]){
+			start = i; break;
+		}
+	}
+	if(start == -1){
+		printf("-1\n"); return 0;
+	}
+	start++;
+	int ma = 0, cnt = 0;
+	reps(i, start, start + N){
+		if(color[i % N] == color[(i + 1) % N]){
+			cnt++;
+			chmax(ma, cnt);
+		}else{
+			cnt = 0;
+		}
+	}
+	ma++;
+	printf("%d\n", ma / 2 + ma % 2);
 	return 0;
 }

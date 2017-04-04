@@ -20,39 +20,47 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-bool flag = false;
-void dfs(string s){
-	if(s.size() < 3) return;
-	if(s == "ABC"){
-		// cout << s << endl;
-		flag = true; return;
-	}
-	static string b[] = {"A", "B", "C"};
-	rep(k, 3){
-		string t = s;
-		bool f = false;
-		/* すべての"ABC"をb[k]日間したら, 置換後の文字列にb[k]は含まれていてはだめ */
-		int cnt = 0;
-		rep(i, t.size()){
-			if(i < t.size() - 2 && t[i] == 'A' && t[i + 1] == 'B' && t[i + 2] == 'C'){
-				f = true;
-				t.replace(i, 3, b[k]);
-			}else if(t[i] == "ABC"[k]){
-				cnt++;
-			}
-		}
-		if(f && cnt == 0){
-			// cout << t << endl;
-			dfs(t);
+/*
+K=2 0, 1, 3, 7
+K=3 0, 1, 2, 4, 7, 11, 17
+K=4 0, 1, 2, 3, 5, 7, 10, 14, 19
+*/
+int N, k;
+bool slv(ll x){
+	bool f = true;
+	rep(i, N - 1){
+		x -= x / k + 1;
+		if(x < 0){
+			f = false; break;
 		}
 	}
-	return;
+	return f ? true : false;
+}
+
+bool ok(ll x){
+	rep(i, N - 1){
+		x -= x / k + 1;
+		if(x < 0){
+			break;
+		}
+	}
+	return (x == 0) ? true : false;
 }
 
 int main(void){
-	string s; cin >> s;
-	dfs(s);
-	if(flag) printf("Yes\n");
-	else printf("No\n");
+	cin >> N >> k;
+	ll l = 0, r = INFF + 1;
+	while(r - l > 1){
+		ll m = (l + r) / 2;
+		if(slv(m)) r = m; //大きすぎた
+		else l = m; // 小さすぎた
+	}
+	while(1){
+		if(ok(l)){
+			printf("%lld\n", l); break;
+		}
+		l++;
+	}
+
 	return 0;
 }

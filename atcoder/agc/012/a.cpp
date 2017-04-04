@@ -20,39 +20,18 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-bool flag = false;
-void dfs(string s){
-	if(s.size() < 3) return;
-	if(s == "ABC"){
-		// cout << s << endl;
-		flag = true; return;
-	}
-	static string b[] = {"A", "B", "C"};
-	rep(k, 3){
-		string t = s;
-		bool f = false;
-		/* すべての"ABC"をb[k]日間したら, 置換後の文字列にb[k]は含まれていてはだめ */
-		int cnt = 0;
-		rep(i, t.size()){
-			if(i < t.size() - 2 && t[i] == 'A' && t[i + 1] == 'B' && t[i + 2] == 'C'){
-				f = true;
-				t.replace(i, 3, b[k]);
-			}else if(t[i] == "ABC"[k]){
-				cnt++;
-			}
-		}
-		if(f && cnt == 0){
-			// cout << t << endl;
-			dfs(t);
-		}
-	}
-	return;
-}
-
+int n;
 int main(void){
-	string s; cin >> s;
-	dfs(s);
-	if(flag) printf("Yes\n");
-	else printf("No\n");
+	cin >> n;
+	vector<int> a(3 * n);
+	rep(i, 3 * n) cin >> a[i];
+	sort(all(a));
+	ll sum = 0;
+	int idx = 3 * n - 2;
+	while(n){
+		sum += a[idx]; idx -= 2;
+		n--;
+	}
+	cout <<sum << endl;
 	return 0;
 }
