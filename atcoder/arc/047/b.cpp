@@ -25,6 +25,6 @@ int x[100010], b[100010];
 int main(void){
 	cin >> n;
 	rep(i, n) cin >> x[i] >> y[i];
-	
+			
 	return 0;
 }

@@ -20,12 +20,13 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int a[100010], b[100010];
-int 
-int main(void){
-	cin >> n >> m;
-	rep(i, m)cin >> a[i] >> b[i];
+int N;
+int u[100010], v[100010];
+vector<int> G[100010];
 
+int main(void){
+	cin >> N;
+	rep(i, N - 1) cin >> u[i] >> v[i];
+	
 	return 0;
 }

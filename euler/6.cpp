@@ -20,12 +20,28 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int a[100010], b[100010];
-int 
-int main(void){
-	cin >> n >> m;
-	rep(i, m)cin >> a[i] >> b[i];
+/* 
++
+-
+*
+/ 4 / 3 = 1
+% 4 % 2 = 0
+*/
 
+int main(void){
+	int cnt = 0;
+	int sig = 0;
+	for (int h = 0; h <= 100; ++h){
+		sig = sig + h;
+	}
+	
+
+
+	for (int i= 1; i <= 100; ++i){
+		cnt = i*i + cnt;
+
+	}
+	
+	printf("%d\n", sig * sig - cnt);
 	return 0;
 }

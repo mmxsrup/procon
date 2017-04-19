@@ -20,12 +20,14 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int a[100010], b[100010];
-int 
 int main(void){
-	cin >> n >> m;
-	rep(i, m)cin >> a[i] >> b[i];
-
+	int N; cin >> N;
+	int i = 1;
+	int cnt = 0;
+	while(i < N){
+		cnt++;
+		i <<= 1;
+	}
+	cout << cnt << endl;
 	return 0;
 }

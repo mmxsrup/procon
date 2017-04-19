@@ -20,12 +20,11 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int a[100010], b[100010];
-int 
 int main(void){
-	cin >> n >> m;
-	rep(i, m)cin >> a[i] >> b[i];
-
-	return 0;
+	vector<int> a = {4, 1, 2, 4};
+	sort(a.begin(), a.end());
+	for (int i = 0; i < a.size(); ++i)
+	{
+		printf("%d\n", a[i]);
+	}
 }
