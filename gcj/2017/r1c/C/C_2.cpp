@@ -20,24 +20,37 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
+int N, K;
+double U;
+double P[100];
 
-ll n, m;
-ll x[100010], y[100010];
-ll a[100010], b[100010];
+void solve(void){
+	cin >> N >> K;
+	cin >> U;
+	rep(i, N) cin >> P[i];
+	priority_queue<double, vector<double>, greater<double> > p; // 小さい順
+	rep(i, N){
+		p.push(P[i]);
+	}
+	while(U >= 0.0001){
+		auto d = p.top(); p.pop();
+		p.push(d + 0.0001);
+		U -= 0.0001;
+	}
+	double ans = 1.0;
+	while(!p.empty()){
+		auto d = p.top(); p.pop();
+		// printf("%f\n", d);
+		ans *= d;
+	}
+	printf("%.9f\n", ans);
+}
+
 int main(void){
-	cin >> n >> m;
-	rep(i, n) cin >> x[i];
-	rep(i, m) cin >> y[i];
-	// rep(i, n - 1) a[i] = x[i + 1] - x[i];
-	// rep(i, m - 1) b[i] = y[i + 1] - y[i];
-
-	ll sumx = 0, sumy = 0;
-	rep(i, n) sumx += (i * x[i]) - ((n - 1 - i) * x[i]), sumx %= MOD;
-	// printf("x %lld\n", sumx);
-	rep(i, m) sumy += (i * y[i]) - ((m - 1 - i) * y[i]), sumy %= MOD;
-	// printf("y %lld\n", sumy);
-	
-	ll ret = sumx * sumy % MOD;
-	printf("%lld\n", ret);
+	int T; cin >> T;
+	rep(i, T){
+		printf("Case #%d: ", i + 1);
+		solve();
+	}
 	return 0;
 }

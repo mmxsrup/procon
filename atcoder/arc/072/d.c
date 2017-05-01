@@ -1,0 +1,1 @@
+long long a,b;main(){scanf("%lld%lld",&a,&b);puts(abs(a-b)<2?"Brown":"Alice");}

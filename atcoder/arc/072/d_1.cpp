@@ -19,25 +19,48 @@ typedef vector<pint> vpint;
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
+ 
+ll X, Y;
+ 
+bool flag = false;
 
 
-ll n, m;
-ll x[100010], y[100010];
-ll a[100010], b[100010];
+
+void dfs(ll x, ll y, int cnt){
+	// printf("%lld %lld \n", x, y);
+	if(x <= 1 && y <= 1){
+		if(cnt % 2) flag = true;
+		return;
+	}
+ 
+	ll dx, dy;
+	if(x >= 2){
+		if(x % 2) dx = x - 1;
+		else dx = x;
+		dfs(x - dx, y + dx / 2, cnt + 1);
+		if(dx >= 4){
+			dx -= 2;
+			dfs(x - dx, y + dx / 2, cnt + 1);
+		}
+ 
+	}
+	if(y >= 2){
+		if(y % 2) dy = y - 1;
+		else dy = y;
+		dfs(x + dy / 2, y - dy, cnt + 1);
+ 		if(dy >= 4){
+ 			dy -= 2;
+ 			dfs(x + dy / 2, y - dy, cnt + 1);
+ 		}
+	}
+	return;
+}
+ 
 int main(void){
-	cin >> n >> m;
-	rep(i, n) cin >> x[i];
-	rep(i, m) cin >> y[i];
-	// rep(i, n - 1) a[i] = x[i + 1] - x[i];
-	// rep(i, m - 1) b[i] = y[i + 1] - y[i];
-
-	ll sumx = 0, sumy = 0;
-	rep(i, n) sumx += (i * x[i]) - ((n - 1 - i) * x[i]), sumx %= MOD;
-	// printf("x %lld\n", sumx);
-	rep(i, m) sumy += (i * y[i]) - ((m - 1 - i) * y[i]), sumy %= MOD;
-	// printf("y %lld\n", sumy);
-	
-	ll ret = sumx * sumy % MOD;
-	printf("%lld\n", ret);
+	cin >> X >> Y;
+	dfs(X, Y, 0);
+	if(flag) printf("Alice\n");
+	else printf("Brown\n");
+ 
 	return 0;
 }
