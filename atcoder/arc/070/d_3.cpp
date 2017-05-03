@@ -20,28 +20,34 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-/* 
-+
--
-*
-/ 4 / 3 = 1
-% 4 % 2 = 0
-*/
+int N, K;
+int a[5010];
+int dp[5010][5010];
+int rdp[5010][5010];
 
 int main(void){
-	int cnt = 0;
-	int sig = 0;
-	for (int h = 0; h <= 100; ++h){
-		sig = sig + h;
+	cin >> N >> K;
+	rep(i, N) cin >> a[i];
+
+	dp[0][0] = 0;
+	rep(i, N){
+		rep(j, 5001){
+			if(dp[i][j] == 0) continue;
+			dp[i + 1][j] = 1;
+			dp[i + 1][min(5000, j + a[i])] = 1;
+		}
 	}
-
-
-
-	for (int i= 1; i <= 100; ++i){
-		cnt = i*i + cnt;
-
+	dp[N][0] = 0;
+	for (int i = n; i >= 1; ++i){
+		rep(j, 5001){
+			if(dp[i][j] == 0) continue;
+			dp[i - 1][j] = 1;
+			dp[i - 1][min(5000, j + a[i])] = 1;
+		}
 	}
-	
-	printf("%d\n", sig * sig - cnt);
+	rep(i, N){
+		vector<int> v;
+		rep(j, 5001)rep(k, 5001) if(dp[i - 1][j] && dp[i + 1][k]) v.pb(j + k);
+	}
 	return 0;
 }

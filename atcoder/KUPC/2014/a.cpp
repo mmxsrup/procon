@@ -20,28 +20,19 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-/* 
-+
--
-*
-/ 4 / 3 = 1
-% 4 % 2 = 0
-*/
-
 int main(void){
-	int cnt = 0;
-	int sig = 0;
-	for (int h = 0; h <= 100; ++h){
-		sig = sig + h;
+	vector<int> a, b;
+	rep(i, 3){
+		int d; cin >> d; a.pb(d);
 	}
-
-
-
-	for (int i= 1; i <= 100; ++i){
-		cnt = i*i + cnt;
-
+	rep(i, 3){
+		int d; cin >> d; b.pb(d);
 	}
-	
-	printf("%d\n", sig * sig - cnt);
+	sort(all(a)), sort(all(b));
+	ll ans = 0;
+	rep(i, 3){
+		ans += abs(a[i] - b[i]);
+	}
+	cout << ans << endl;
 	return 0;
 }

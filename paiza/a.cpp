@@ -20,28 +20,27 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-/* 
-+
--
-*
-/ 4 / 3 = 1
-% 4 % 2 = 0
-*/
-
+int M, N;
+int s[1010], p[3010];
+vector<int> v;
 int main(void){
-	int cnt = 0;
-	int sig = 0;
-	for (int h = 0; h <= 100; ++h){
-		sig = sig + h;
+	scanf("%d %d", &M, &N);
+	rep(i, M) scanf("%d", &s[i]);
+	rep(i, N) scanf("%d", &p[i]);
+	v.resize(N * N);
+	rep(i, N)rep(j, N)v[N * i + j] = p[i] * p[j];
+	/*
+	rep(i, N)rep(j, N) v.pb(p[i] * p[j]);
+	for(auto u : v){
+		printf("%d ", u);
 	}
+	printf("\n");
+	*/
 
-
-
-	for (int i= 1; i <= 100; ++i){
-		cnt = i*i + cnt;
-
+	sort(all(v));
+	rep(i, M){
+		auto d = lower_bound(all(v), s[i]);
+		printf("%d\n", *d - s[i]);
 	}
-	
-	printf("%d\n", sig * sig - cnt);
 	return 0;
 }

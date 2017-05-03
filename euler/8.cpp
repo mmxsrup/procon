@@ -26,7 +26,8 @@ int main(void){
 	rep(i, 1000 - 7){
 		ll d = 1;
 		string s = a.substr(i, 13);
-		for(auto u : s) d *= (ll)(u - '0');
+		for(auto u : s) d *= (ll)(u
+		 - '0');
 		chmax(ans, d);
 	}
 	cout << ans << endl;

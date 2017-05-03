@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -20,28 +21,20 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-/* 
-+
--
-*
-/ 4 / 3 = 1
-% 4 % 2 = 0
-*/
-
 int main(void){
-	int cnt = 0;
-	int sig = 0;
-	for (int h = 0; h <= 100; ++h){
-		sig = sig + h;
+	int C; cin >> C;
+	int N, M;
+	rep(i, C){
+		cin >> N >> M;
+		if(N > M) swap(N, M);
+		if(N * M % 8 || N == 1 || M == 1){
+			printf("Impossible\n");
+			continue;
+		}
+		if(N == 2 && M == 4){
+			printf("Impossible\n");
+			continue;
+		}
+		printf("Possible\n");
 	}
-
-
-
-	for (int i= 1; i <= 100; ++i){
-		cnt = i*i + cnt;
-
-	}
-	
-	printf("%d\n", sig * sig - cnt);
-	return 0;
 }

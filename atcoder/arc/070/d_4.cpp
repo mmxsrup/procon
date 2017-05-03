@@ -21,34 +21,44 @@ const int INF = 1e9;
 const ll INFF = 1e18;
 
 int N, K;
-int a[5010];
+vector<int> a;
+int dp[5010];
 
-bool dp[5010]; //dp[j]合計がjの時があるなら1
-bool solve(int idx){
+bool solve(int m){
 	rep(i, 5010) dp[i] = 0;
 	dp[0] = 1;
-	rep(i, N)REP(j, K + 1){
+	rep(i,  N)for (int j = K; j >= 0; --j){
+		if(i == m) continue;
 		if(dp[j] == 0) continue;
-		if(i == idx) continue;
-		if(j + a[i] > K) continue;
-		dp[j + a[i]] = 1;
+		dp[min(5000, j + a[i])] = 1;
 	}
-	reps(i, max(0, K - a[idx]), K){
-		if(dp[i]) return true;
+	for (int i = max(0, K - a[m]); i < K; ++i){
+		if(dp[i] == 1) return true; //必要
 	}
-	return false;
+	return false; //不必要
 }
 
 int main(void){
 	cin >> N >> K;
-	rep(i, N) cin >> a[i];
-	sort(a, a + N);
-	int l = -1, r = N;
-	while(r - l > 1){ //[l, r)
-		int m = (l + r) / 2;
-		if(!solve(m)) l = m;
-		else r = m;
+	rep(i, N){
+		int d; cin >> d;
+		a.pb(d);
 	}
-	printf("%d\n", l + 1);
+	sort(all(a));
+	
+	int l = 0, r = N;//[l, r)
+	while(r - l > 1){ //小さいやつほどfalse
+		int m = (l + r) / 2;
+		if(solve(m)) r = m;
+		else l = m;
+	}
+	for (int i = max(0, l - 10); i <= min(N - 1, r + 10); ++i){
+		printf("i %d\n", i);
+		if(solve(i)){
+			printf("%d\n", i);
+			return 0;
+		}
+	}
+	printf("%d\n", N);
 	return 0;
 }

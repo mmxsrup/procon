@@ -20,28 +20,16 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-/* 
-+
--
-*
-/ 4 / 3 = 1
-% 4 % 2 = 0
-*/
-
 int main(void){
+	ll x;
+	cin >> x;
 	int cnt = 0;
-	int sig = 0;
-	for (int h = 0; h <= 100; ++h){
-		sig = sig + h;
+	for (int i = 0; i < 10000000; ++i){
+		cnt += (i + 1);
+		if(cnt >= x){
+			printf("%d\n", i + 1);
+			return 0;
+		}
 	}
-
-
-
-	for (int i= 1; i <= 100; ++i){
-		cnt = i*i + cnt;
-
-	}
-	
-	printf("%d\n", sig * sig - cnt);
 	return 0;
 }
