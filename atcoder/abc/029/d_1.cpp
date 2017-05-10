@@ -9,10 +9,6 @@ typedef vector<pint> vpint;
 #define reps(i,f,n) for(int i=(f);i<(n);i++)
 #define each(it,v) for(__typeof((v).begin()) it=(v).begin();it!=(v).end();it++)
 #define all(v) (v).begin(),(v).end()
-<<<<<<< HEAD
-#define rall(v) (v).rbegin(), (v).rend()
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 #define eall(v) unique(all(v), v.end())
 #define pb push_back
 #define mp make_pair
@@ -20,24 +16,38 @@ typedef vector<pint> vpint;
 #define se second
 #define chmax(a, b) a = (((a)<(b)) ? (b) : (a))
 #define chmin(a, b) a = (((a)>(b)) ? (b) : (a))
-<<<<<<< HEAD
-#define OUT(x) cout << #x << " = " << x << endl; 
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
+string N;
+
+ll dp[20][2][20];
+
 int main(void){
-<<<<<<< HEAD
-	int A, B;
-	cout << 0 << " " << 0 << endl;
-	cin >> A;
-	cout << 0 << " " << A << endl;
-	cin >> B;
-	cout << B / 2 << " " << A - B / 2 << endl;
-=======
-	
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
+	cin >> N;
+	rep(i, 20)rep(j, 2)rep(k, 20) dp[i][j][k] = 0;
+	dp[0][0][0] = 1;
+	rep(i, N.size())rep(j, 2)rep(k, 20){
+		rep(num, 10){
+			if(j == 1){
+				if(num == 1)dp[i + 1][1][k + 1] += dp[i][j][k];
+				else dp[i + 1][1][k] += dp[i][j][k];
+			}else{
+				if(num == (N[i] - '0')){
+					if(num == 1) dp[i + 1][0][k + 1] += dp[i][j][k];
+					else dp[i + 1][0][k] += dp[i][j][k];
+				}else if(num < (N[i] - '0')){
+					if(num == 1) dp[i + 1][1][k + 1] += dp[i][j][k];
+					else dp[i + 1][1][k] += dp[i][j][k];
+				}
+			}
+		}
+	}
+	ll ans = 0;
+	rep(j, 2)rep(k, 20){
+		ans += k * dp[N.size()][j][k];
+	}
+	printf("%lld\n", ans);
 	return 0;
 }

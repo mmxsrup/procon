@@ -9,10 +9,6 @@ typedef vector<pint> vpint;
 #define reps(i,f,n) for(int i=(f);i<(n);i++)
 #define each(it,v) for(__typeof((v).begin()) it=(v).begin();it!=(v).end();it++)
 #define all(v) (v).begin(),(v).end()
-<<<<<<< HEAD
-#define rall(v) (v).rbegin(), (v).rend()
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 #define eall(v) unique(all(v), v.end())
 #define pb push_back
 #define mp make_pair
@@ -20,24 +16,33 @@ typedef vector<pint> vpint;
 #define se second
 #define chmax(a, b) a = (((a)<(b)) ? (b) : (a))
 #define chmin(a, b) a = (((a)>(b)) ? (b) : (a))
-<<<<<<< HEAD
-#define OUT(x) cout << #x << " = " << x << endl; 
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
+int dp[1110][1110];
+
+string s;
 int main(void){
-<<<<<<< HEAD
-	int A, B;
-	cout << 0 << " " << 0 << endl;
-	cin >> A;
-	cout << 0 << " " << A << endl;
-	cin >> B;
-	cout << B / 2 << " " << A - B / 2 << endl;
-=======
-	
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
+	cin >> s;
+	rep(i, 1110)rep(j, 1110) dp[i][j] = -INF;
+	dp[0][510] = 0;
+	reps(i, 1, s.size() + 1){
+		rep(j, 1010){
+			if(dp[i - 1][j] != -INF){
+				if(s[i - 1] == '+'){
+					chmax(dp[i][j], dp[i - 1][j] + j - 510);
+				}
+				else if(s[i - 1] == '-'){
+					chmax(dp[i][j], dp[i - 1][j] - j + 510);
+				}
+				else{
+					chmax(dp[i][j + 1], dp[i - 1][j]);
+					chmax(dp[i][j - 1], dp[i - 1][j]);
+				}
+			}
+		}
+	}
+	printf("%d\n", dp[s.size()][510]);
 	return 0;
 }

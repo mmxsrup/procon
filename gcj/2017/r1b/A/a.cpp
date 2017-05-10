@@ -9,10 +9,6 @@ typedef vector<pint> vpint;
 #define reps(i,f,n) for(int i=(f);i<(n);i++)
 #define each(it,v) for(__typeof((v).begin()) it=(v).begin();it!=(v).end();it++)
 #define all(v) (v).begin(),(v).end()
-<<<<<<< HEAD
-#define rall(v) (v).rbegin(), (v).rend()
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 #define eall(v) unique(all(v), v.end())
 #define pb push_back
 #define mp make_pair
@@ -20,24 +16,34 @@ typedef vector<pint> vpint;
 #define se second
 #define chmax(a, b) a = (((a)<(b)) ? (b) : (a))
 #define chmin(a, b) a = (((a)>(b)) ? (b) : (a))
-<<<<<<< HEAD
-#define OUT(x) cout << #x << " = " << x << endl; 
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
+
+ll K[1010], S[1010];
+void solve(void){
+	ll D, N; cin >> D >> N;
+	rep(i, N) cin >> K[i] >> S[i];
+	double ma = 0;
+	int idx = 0;
+	rep(i, N){
+		ll dist = D - K[i];
+		double time =  (double)(dist) / (double)S[i];
+		if(ma < time){
+			idx = i;
+			ma = time;
+		}
+	}
+	double ans = (double)D / ma;
+	printf("%.9f\n", ans);
+}
+
 int main(void){
-<<<<<<< HEAD
-	int A, B;
-	cout << 0 << " " << 0 << endl;
-	cin >> A;
-	cout << 0 << " " << A << endl;
-	cin >> B;
-	cout << B / 2 << " " << A - B / 2 << endl;
-=======
-	
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
+	int T; cin >> T;
+	rep(i, T){
+		printf("Case #%d: ", i + 1);
+		solve();
+	}
 	return 0;
 }

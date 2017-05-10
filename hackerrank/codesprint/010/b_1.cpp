@@ -9,10 +9,6 @@ typedef vector<pint> vpint;
 #define reps(i,f,n) for(int i=(f);i<(n);i++)
 #define each(it,v) for(__typeof((v).begin()) it=(v).begin();it!=(v).end();it++)
 #define all(v) (v).begin(),(v).end()
-<<<<<<< HEAD
-#define rall(v) (v).rbegin(), (v).rend()
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 #define eall(v) unique(all(v), v.end())
 #define pb push_back
 #define mp make_pair
@@ -20,24 +16,47 @@ typedef vector<pint> vpint;
 #define se second
 #define chmax(a, b) a = (((a)<(b)) ? (b) : (a))
 #define chmin(a, b) a = (((a)>(b)) ? (b) : (a))
-<<<<<<< HEAD
-#define OUT(x) cout << #x << " = " << x << endl; 
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int main(void){
-<<<<<<< HEAD
-	int A, B;
-	cout << 0 << " " << 0 << endl;
-	cin >> A;
-	cout << 0 << " " << A << endl;
-	cin >> B;
-	cout << B / 2 << " " << A - B / 2 << endl;
-=======
+int n;
+int ans = INF;
+void dfs(list<int> v){
+	/*
+	for(auto u : v){
+		printf("%d ", u);
+	}
+	*/
+	bool flag = true;
+	list<int>::iterator pos;
+	for(auto i0 = v.begin(); i0 != v.end(); ++i0){
+		auto i1 = next(i0), i2 = next(i1);
+		if((*i0 < *i1 && *i1 < *i2 || 
+			*i0 > *i1 && *i1 > *i2)){
+			flag = false;
+			break;
+		}
+	}
+	if(flag){
+		chmin(ans, n - v.size());
+		return;
+	}
 	
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
+	return;
+}
+
+int main(void){
+	cin >> n;
+	list<int> a;
+	rep(i, n){
+		int d; cin >> d;
+		a.pb(d);
+	}
+	if(n <= 2){
+		printf("0\n"); return 0;
+	}
+	dfs(a);
+	cout << ans << endl;
 	return 0;
 }

@@ -9,10 +9,6 @@ typedef vector<pint> vpint;
 #define reps(i,f,n) for(int i=(f);i<(n);i++)
 #define each(it,v) for(__typeof((v).begin()) it=(v).begin();it!=(v).end();it++)
 #define all(v) (v).begin(),(v).end()
-<<<<<<< HEAD
-#define rall(v) (v).rbegin(), (v).rend()
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 #define eall(v) unique(all(v), v.end())
 #define pb push_back
 #define mp make_pair
@@ -20,24 +16,29 @@ typedef vector<pint> vpint;
 #define se second
 #define chmax(a, b) a = (((a)<(b)) ? (b) : (a))
 #define chmin(a, b) a = (((a)>(b)) ? (b) : (a))
-<<<<<<< HEAD
-#define OUT(x) cout << #x << " = " << x << endl; 
-=======
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
 const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
+ll a[7];
+
 int main(void){
-<<<<<<< HEAD
-	int A, B;
-	cout << 0 << " " << 0 << endl;
-	cin >> A;
-	cout << 0 << " " << A << endl;
-	cin >> B;
-	cout << B / 2 << " " << A - B / 2 << endl;
-=======
+	rep(i, 7) cin >> a[i];
+	ll ans = 0;
+	ans += 2 * (a[0] / 2);
+	ans += 1 * a[1];
+	ans += 2 * (a[3] / 2);
+	ans += 2 * (a[4] / 2);
 	
->>>>>>> 314acccde4c67666fc2d1270d8ec458003665801
+	ll ans1 = 0;
+	if(a[0] > 0 && a[3] > 0 && a[4] > 0){
+		ans1 += 3;
+		a[0]--; a[3]--; a[4]--;
+	}
+	ans1 += 2 * (a[0] / 2);
+	ans1 += 1 * a[1];
+	ans1 += 2 * (a[3] / 2);
+	ans1 += 2 * (a[4] / 2);
+	printf("%lld\n", max(ans1, ans));
 	return 0;
 }
