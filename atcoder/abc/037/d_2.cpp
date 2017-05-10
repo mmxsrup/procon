@@ -20,38 +20,34 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int N;
-int a[100010], b[100010];
-vector<int> G[100010];
-ll dp[100010][2];
-
-void dfs(int u, int p){
-	if(G[u].size() == 1 && G[u][0] == p){
-		// printf("k\n");
-		dp[u][0] = 1, dp[u][1] = 1;
-		return;
+int H, W;
+int a[1010][1010];
+ll dp[1010][1010];
+int dy[] = {1, 0, -1, 0}, dx[] = {0, 1, 0, -1};
+int dfs(int y, int x, int py, int px){
+	// printf("%d %d %d %d\n", y, x, py, px);
+	if(dp[y][x] != 0) return dp[y][x];
+	rep(i, 4){
+		int ny = y + dy[i], nx = x + dx[i];
+		if(!(0 <= ny && ny < H && 0 <= nx && nx < W)) continue;
+		if(a[y][x] >= a[ny][nx]) continue;
+		dp[y][x] += dfs(ny, nx, y, x);
+		dp[y][x] %= MOD;
 	}
-	ll white = 1, black = 1;
-	for(auto v : G[u]){
-		if(v == p) continue;
-		dfs(v, u);
-		white *= dp[v][0] + dp[v][1];
-		white %= MOD;
-		black *= dp[v][0];
-		black %= MOD;
-	}
-	dp[u][0] = white;
-	dp[u][1] = black;
+	dp[y][x]++; dp[y][x] %= MOD;
+	return dp[y][x];
 }
 
 int main(void){
-	cin >> N;
-	rep(i, N - 1){
-		int a, b; cin >> a >> b;
-		a--; b--;
-		G[a].pb(b), G[b].pb(a);
+	cin >> H >> W;
+	rep(i, H)rep(j, W) cin >> a[i][j];
+	ll ret = 0;
+	rep(i, H)rep(j, W){
+		// printf("ij %d %d\n", i, j);
+		ret += dfs(i, j, -1, -1);
+		// printf("ret %lld\n", ret);
+		ret %= MOD;
 	}
-	dfs(0, -1);
-	ll ret = (dp[0][0] + dp[0][1]) % MOD;
 	printf("%lld\n", ret);
+	return 0;
 }

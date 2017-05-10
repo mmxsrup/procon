@@ -20,38 +20,19 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int N;
-int a[100010], b[100010];
-vector<int> G[100010];
-ll dp[100010][2];
-
-void dfs(int u, int p){
-	if(G[u].size() == 1 && G[u][0] == p){
-		// printf("k\n");
-		dp[u][0] = 1, dp[u][1] = 1;
-		return;
-	}
-	ll white = 1, black = 1;
-	for(auto v : G[u]){
-		if(v == p) continue;
-		dfs(v, u);
-		white *= dp[v][0] + dp[v][1];
-		white %= MOD;
-		black *= dp[v][0];
-		black %= MOD;
-	}
-	dp[u][0] = white;
-	dp[u][1] = black;
-}
-
+int N, S, T;
+int W;
 int main(void){
-	cin >> N;
+	cin >> N >> S >> T;
+	cin >> W;
+	int cnt = 0;
+		if(S <= W && W <= T) cnt++;
+
 	rep(i, N - 1){
-		int a, b; cin >> a >> b;
-		a--; b--;
-		G[a].pb(b), G[b].pb(a);
+		int A; cin >> A;
+		W += A;
+		if(S <= W && W <= T) cnt++;
 	}
-	dfs(0, -1);
-	ll ret = (dp[0][0] + dp[0][1]) % MOD;
-	printf("%lld\n", ret);
+	cout << cnt << endl;
+	return 0;
 }
