@@ -63,22 +63,30 @@ int main(void){
 	rep(i, n) cin >> a[i];
 	rep(i, n) suml[i] = mal[a[i]] + 1, mal[a[i]]++;
 	REP(i, n) sumr[i] = mar[a[i]] + 1, mar[a[i]]++;
-
+	/*
 
 	printf("mal\n");
 	rep(i, n) printf("%d ", suml[i]);
 	printf("\n");
 	rep(i, n) printf("%d ", sumr[i]);
 	printf("\n");
-
-	segtree<int> seg(n);
+	*/
+	segtree<int> seg(n + 10);
 	ll ans = 0;
 	rep(j, n){ // j を動かす
+		/*
 		printf("sumr %d\n", sumr[j]);
 		int d = seg.query(0, sumr[j] + 1); // i < j で f(l,i,ai)<=f(j,n,aj)となる iの数
 		printf("d %d\n", d);
 		ans += j - d; // i < j で f(l,i,ai)>f(j,n,aj)となる i の 数
 		printf("j - d %d\n", j - d);
+		seg.update(suml[j], 1);
+		*/
+		printf("query %d \n", seg.query(sumr[j] + 1, n + 1));
+
+
+		ans += seg.query(sumr[j] + 1, n + 1); // i < j で f(l, i, ai) > f(j, n, aj) となる iの数
+
 		seg.update(suml[j], 1);
 	}
 	printf("%lld\n", ans);
