@@ -20,34 +20,25 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int l[300010], r[300010], x[300010];
-int ans[300010];
+int N;
+int p[20010];
+int a[20010], b[20010];
 
 int main(void){
-	cin >> n >> m;
-	rep(i, m) cin >> l[i] >> r[i] >> x[i];
-	rep(i, m) l[i]--, r[i]--, x[i]--;
-	rep(i, 300010) ans[i] = -1;
-
-	set<int> se;
-	rep(i, n) se.insert(i);
-	rep(i, m){
-		auto itr = se.lower_bound(l[i]);
-		while(itr != se.end() && *itr <= r[i]){ /* 条件文の順番注意? */
-		// while(*itr <= r[i] && itr != se.end()){
-			if(*itr == x[i]){
-				itr++;
-				continue;
-			}
-			ans[*itr] = x[i];
-			itr = se.erase(itr); /* set.erase が次の要素のイテレータを返す */
-		}
+	cin >> N;
+	rep(i, N) cin >> p[i];
+	rep(i, N) p[i]--;
+	rep(i, N) a[p[i]] = i + 1;
+	rep(i, N) a[i] += 20001 * i;
+	rep(i, N) b[i] = INF -  20001 * i;
+	rep(i, N)printf("%d ", a[i]);
+	printf("\n");
+	rep(i, N)printf("%d ", b[i]);
+	printf("\n");
+	/*
+	rep(i, N){
+		printf("%lld\n", a[i] + b[i]);
 	}
-
-	rep(i, n){
-		if(i != n - 1) printf("%d ", ans[i] + 1);
-		else printf("%d\n", ans[i] + 1);
-	}
+	*/
 	return 0;
 }

@@ -20,34 +20,14 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int l[300010], r[300010], x[300010];
-int ans[300010];
 
-int main(void){
-	cin >> n >> m;
-	rep(i, m) cin >> l[i] >> r[i] >> x[i];
-	rep(i, m) l[i]--, r[i]--, x[i]--;
-	rep(i, 300010) ans[i] = -1;
-
-	set<int> se;
-	rep(i, n) se.insert(i);
-	rep(i, m){
-		auto itr = se.lower_bound(l[i]);
-		while(itr != se.end() && *itr <= r[i]){ /* 条件文の順番注意? */
-		// while(*itr <= r[i] && itr != se.end()){
-			if(*itr == x[i]){
-				itr++;
-				continue;
-			}
-			ans[*itr] = x[i];
-			itr = se.erase(itr); /* set.erase が次の要素のイテレータを返す */
-		}
-	}
-
-	rep(i, n){
-		if(i != n - 1) printf("%d ", ans[i] + 1);
-		else printf("%d\n", ans[i] + 1);
+int main(void) {
+	int n; cin >> n;
+	reps(i, 1, n + 1)reps(j, i, n + 1){
+		int k = n - i - j;
+		if(k < j) continue;
+		printf("%d %d %d\n", i, j, k);
+		
 	}
 	return 0;
 }

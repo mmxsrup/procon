@@ -20,34 +20,27 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int l[300010], r[300010], x[300010];
-int ans[300010];
+int N;
+int a[200010];
 
 int main(void){
-	cin >> n >> m;
-	rep(i, m) cin >> l[i] >> r[i] >> x[i];
-	rep(i, m) l[i]--, r[i]--, x[i]--;
-	rep(i, 300010) ans[i] = -1;
-
-	set<int> se;
-	rep(i, n) se.insert(i);
-	rep(i, m){
-		auto itr = se.lower_bound(l[i]);
-		while(itr != se.end() && *itr <= r[i]){ /* 条件文の順番注意? */
-		// while(*itr <= r[i] && itr != se.end()){
-			if(*itr == x[i]){
-				itr++;
-				continue;
-			}
-			ans[*itr] = x[i];
-			itr = se.erase(itr); /* set.erase が次の要素のイテレータを返す */
-		}
+	cin >> N;
+	rep(i, N) cin >> a[i];
+	set<pair<int, int>> l, r;
+	l.insert(mp(INF, -1));
+	reps(i, 1, N) r.insert(mp(a[i], i));
+	r.insert(mp(INF, N));
+	ll ans = 0;
+	rep(i, N){
+		printf("%d\n", i);
+		auto dl = *l.begin();
+		auto dr = *r.begin();
+		printf("l %d r %d\n", dl.se, dr.se);
+		ans += (i - dl.se + 1) * (i - dr.se + 1) * a[i];
+		printf("ans %d\n", ans);
+		r.erase(r.begin());
+		l.insert(mp(i, a[i]));
 	}
-
-	rep(i, n){
-		if(i != n - 1) printf("%d ", ans[i] + 1);
-		else printf("%d\n", ans[i] + 1);
-	}
+	printf("%lld\n", ans);
 	return 0;
 }

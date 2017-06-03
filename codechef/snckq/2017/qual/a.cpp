@@ -20,34 +20,25 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int l[300010], r[300010], x[300010];
-int ans[300010];
+int S;
+int N;
+int H[110];
 
 int main(void){
-	cin >> n >> m;
-	rep(i, m) cin >> l[i] >> r[i] >> x[i];
-	rep(i, m) l[i]--, r[i]--, x[i]--;
-	rep(i, 300010) ans[i] = -1;
-
-	set<int> se;
-	rep(i, n) se.insert(i);
-	rep(i, m){
-		auto itr = se.lower_bound(l[i]);
-		while(itr != se.end() && *itr <= r[i]){ /* 条件文の順番注意? */
-		// while(*itr <= r[i] && itr != se.end()){
-			if(*itr == x[i]){
-				itr++;
-				continue;
-			}
-			ans[*itr] = x[i];
-			itr = se.erase(itr); /* set.erase が次の要素のイテレータを返す */
+	cin >> S;
+	while(S--){
+		cin >> N;
+		rep(i, N) cin >> H[i];
+		bool flag = true;
+		if(N % 2 == 0) flag = false;
+		
+		rep(i, N / 2)if(!(H[i] == i + 1 && H[N - i - 1] == i + 1)){
+			flag = false;
 		}
-	}
+		if(H[N / 2] != N / 2 + 1) flag = false;
 
-	rep(i, n){
-		if(i != n - 1) printf("%d ", ans[i] + 1);
-		else printf("%d\n", ans[i] + 1);
+		if(flag) printf("yes\n");
+		else printf("no\n");
 	}
 	return 0;
 }

@@ -20,34 +20,16 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n, m;
-int l[300010], r[300010], x[300010];
-int ans[300010];
+void test(int n) {
+	ll d = 0;
+	reps(i, 1, n + 1) d ^= i;
+	if(d != 0) printf("O\n");
+	else printf("X\n");
+}
+int main(void) {
+	// reps(i, 1, 100) test(i);
 
-int main(void){
-	cin >> n >> m;
-	rep(i, m) cin >> l[i] >> r[i] >> x[i];
-	rep(i, m) l[i]--, r[i]--, x[i]--;
-	rep(i, 300010) ans[i] = -1;
-
-	set<int> se;
-	rep(i, n) se.insert(i);
-	rep(i, m){
-		auto itr = se.lower_bound(l[i]);
-		while(itr != se.end() && *itr <= r[i]){ /* 条件文の順番注意? */
-		// while(*itr <= r[i] && itr != se.end()){
-			if(*itr == x[i]){
-				itr++;
-				continue;
-			}
-			ans[*itr] = x[i];
-			itr = se.erase(itr); /* set.erase が次の要素のイテレータを返す */
-		}
-	}
-
-	rep(i, n){
-		if(i != n - 1) printf("%d ", ans[i] + 1);
-		else printf("%d\n", ans[i] + 1);
-	}
+	int n; cin >> n;
+	printf("%c\n", (n % 4 == 3) ? 'X': 'O');
 	return 0;
 }
