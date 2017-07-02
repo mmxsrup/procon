@@ -20,7 +20,6 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-
 template <class T> //T(モノイド) : dat[]の中身の型
 class segtree{
 public:
