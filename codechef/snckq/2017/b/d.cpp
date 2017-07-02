@@ -58,10 +58,10 @@ private:
 
 
 int n, m;
-int u[200010], v[200010];
-vector<int> G[100010];
-vector<int> d[100010];
 void solve() {
+	int u[200010], v[200010];
+	vector<int> G[100010];
+	vector<int> d[100010];
 	scanf("%d %d", &n, &m);
 	rep(i, m)scanf("%d %d", &u[i], &v[i]);
 	rep(i, m) u[i]--, v[i]--;
