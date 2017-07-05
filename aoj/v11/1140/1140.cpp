@@ -26,31 +26,39 @@ int w, h;
 string c[22];
 int dist[22][22];
 
-vector<int> G[22];
+vector<pair<int, int>> G[22];
+vector<pair<int, int>> gomi;
+
 
 void solve(pair<int, int> s) {
 	rep(i, 22)rep(j, 22) dist[i][j] = INF;
 	dist[s.fi][s.se] = 0;
 	queue<pair<int, int>> q;
-	q.push(mp(s.fi, se.se));
+	q.push(mp(s.fi, s.se));
 	while(!q.empty()){
 		auto y = q.front().fi, x = q.front().se;
 		q.pop();
 		rep(k, 4) {
 			int ny = y + dy[k], nx = x + dx[k];
-			if(!(0 <= ny < && ny < h && 0 <= nx && nx < w)) continue;
+			if(!(0 <= ny && ny < h && 0 <= nx && nx < w)) continue;
 			if(dist[ny][nx] != INF) continue;
 			if(c[ny][nx] == 'x') continue;
 			dist[ny][nx] = dist[y][x] + 1;
+			q.push(mp(ny, nx));
 		}
 	}
 }
 
+
 int dp[(1<<22)][22];
-void bitdp(void) {
+void bitdp(int n, int sy, int sx) {
 	rep(i, (1<<n))rep(j, n) dp[i][j] = INF;
-	dp[0][0] = 0;
-	for (int mask = 0; mask < (1<<n); ++mask) {
+	solve(make_pair(sy, sx));
+	rep(i, n){
+		dp[(1<<i)][i] = dist[gomi[i].fi][gomi[i].se];
+	}
+
+	for (int mask = 1; mask < (1<<n); ++mask) {
 		for (int u = 0; u < n; ++u) {
 			for (auto t : G[u]) {
 				auto v = t.fi, cost = t.se;
@@ -62,20 +70,37 @@ void bitdp(void) {
 		}
 	}
 }
+
+
 int main(void) {
 	while(1) {
-		cin >> w >> h;
+		scanf("%d %d", &w, &h);
 		if(w == 0 && h == 0) break;
-		rep(i, 22) G[i].clear();
+		rep(i, h) cin >> c[i];
 
-		vector<pair<int, int>> gomi;
-		rep(y, h)rep(x, w) if(s[y][x] == '*') gomi.pb(mp(y, x));
-		for(auto u : gomi) {
+		rep(i, 22) G[i].clear();
+		gomi.clear();
+		
+		rep(y, h)rep(x, w) if(c[y][x] == '*') gomi.pb(mp(y, x));
+		int sy, sx;
+		rep(y, h) rep(x, w) if(c[y][x] == 'o') sy = y, sx = x;
+		int n = gomi.size();
+
+		rep(i, gomi.size()) {
+			auto u = gomi[i];
 			solve(u);
-			for(auto v : gomi) {
-				G[u].pb(mp(v, dist[u][v]));
+			reps(j, i + 1, gomi.size()) {
+				auto v = gomi[j];
+				auto di = dist[v.fi][v.se];
+				G[i].pb(mp(j, di)), G[j].pb(mp(i, di));
 			}
 		}
+
+		bitdp(n, sy, sx);
+		ll ret = INF;
+		rep(i, n) chmin(ret, dp[(1<<n) - 1][i]);
+		if(ret != INF) printf("%lld\n", ret);
+		else printf("-1\n");
 	}
 	return 0;
 }

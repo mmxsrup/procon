@@ -86,7 +86,16 @@ int main(void){
 	rep(i, H){
 		rep(j, W){
 			if(s[i][j] == 'o'){
-				fw.add_edge(i * w + j, )
+				fw.add_edge(i, H + j, 1);
+				fw.add_edge(H + j, i, 1);
 			}
+		}
+	}
+	int start = H + W + 1, goal = H + W + 2;
+	fw.add_edge(start, sy, INF), fw.add_edge(start, H + sx, INF);
+	fw.add_edge(ty, goal, INF),  fw.add_edge(H + tx, goal, INF);
+
+	int ret = fw.max_flow(start, goal);
+	printf("%d\n", ret);
 	return 0;
 }
