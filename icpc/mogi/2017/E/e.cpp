@@ -28,10 +28,10 @@ class Point { // 点
 public:
 	double x, y;
 	Point(double x = 0, double y = 0):x(x), y(y){}
-	Point operator + (Point p) { return Point(x + p.x, y + p.y); }
-	Point operator - (Point p) { return Point(x - p.x, y - p.y); }
-	Point operator * (double a) { return Point(a * x, a * y); }
-	Point operator / (double a) { return Point(x / a, y / a); }
+	Point operator + (Point p) const { return Point(x + p.x, y + p.y); }
+	Point operator - (Point p) const { return Point(x - p.x, y - p.y); }
+	Point operator * (double a) const { return Point(a * x, a * y); }
+	Point operator / (double a) const { return Point(x / a, y / a); }
 	double abs() const { return sqrt(norm()); }
 	double norm() const { return x * x + y * y; }
 	// bool operator < (const Point &p) const { return x != p.x ? x < p.x : y < p.y; }
@@ -50,9 +50,10 @@ double length(const Point& a) { return a.abs(); } // 通常の長さ
 Point rotationalTransfer(Point c, double r, double deg) { // cを中心として半径rの円周上のdeg度の位置座標
 	double rad = PI * deg / 180.0; return c + Point(cos(rad), sin(rad)) * r;
 }
-// (x, y, z) の点を光源(xy座標での角度がtheta, xy平面からz方向への角度がphiの時の)
+// (x, y, z) の点を光源(xy座標での角度がtheta度, xy平面からz方向への角度がphi度の時の)からてらした時の影のxy座標
 Point Shadow(double x, double y, double z, double theta, double phi) {
-	return Point(x + cos(theta) * z / sin(phi), y + sin(theta) * z / sin(phi));
+	theta = PI * theta / 180.0, phi = PI * phi / 180.0;
+	return Point(x - z / tan(phi) * cos(theta), y - z / tan(phi) * sin(theta));
 }
 
 enum ccw_t {
@@ -87,7 +88,7 @@ vector<Segment> getPolygonSegument(const Polygon& p) { //多角形の点から�
 	ret.push_back(Segment(p[p.size() - 1], p[0]));
 	return ret;
 }
-int contains(Polygon g, Point p){ // 多角形gの中に点pが含まれているか
+int contains(const Polygon& g, const Point& p){ // 多角形gの中に点pが含まれているか
 	int n = g.size(); bool x = false;
 	for (int i = 0; i < n; ++i) {
 		Point a = g[i] - p, b = g[(i + 1) % n] - p;
@@ -153,7 +154,7 @@ double getDistanceSP(Segment s, Point p) { // 線分sと点pの距離
 	if( dot(s.p1 - s.p2, p - s.p2) < EPS ) return length(p - s.p2);
 	return getDistanceLP(s, p);
 }
-double getDistanceSS(Segment s1, Segment s2) { // 線分s1と線分s2の交点
+double getDistanceSS(const Segment& s1, const Segment& s2) { // 線分s1と線分s2の交点
 	if( intersect(s1, s2) ) return 0.0; //交わっているとき
 	return min(min(getDistanceSP(s1, s2.p1), getDistanceSP(s1, s2.p2)),
 			   min(getDistanceSP(s2, s1.p1), getDistanceSP(s2, s1.p2)));
@@ -165,8 +166,10 @@ double getDistancePolP(const Polygon& pol, const Point& p) { // 多角形polと�
 	return ret;
 }
 double getDistancePolPol(const Polygon& p1, const Polygon& p2) { // 多角形p1とp2の距離
+	for(const Point& p : p1) if(contains(p2, p) != 0) return 0.0; // p1の点が多角形p2の中に含まれている
+	for(const Point& p : p2) if(contains(p1, p) != 0) return 0.0; // p2の点が多角形p1の中に含まれている
 	double ret = 1e9;
-	for(Segment& u : getPolygonSegument(p1))for(Segment& v : getPolygonSegument(p2)) {
+	for(const Segment& u : getPolygonSegument(p1))for(const Segment& v : getPolygonSegument(p2)) {
 		ret = min(ret, getDistanceSS(u, v));
 	}
 	return ret;
@@ -204,8 +207,6 @@ public:
 		return contain(s.p1) && contain(s.p2);
 	}
 };
-
-
 
 
 const int MAX_N = 210;
@@ -263,10 +264,12 @@ int main(void) {
 			v.pb(tt);
 		}
 
+		/*
 		for(auto u : v) {
 			for(auto k : u) printf("%f %f, ", k.x, k.y);
 			printf("\n");
 		}
+		*/	
 
 		rep(i, MAX_N) G[i].clear();
 
@@ -285,6 +288,8 @@ int main(void) {
 			auto dis = getDistancePolP(v[i], goal);
 			G[N + 1].pb(mp(i + 1, dis)), G[i + 1].pb(mp(N + 1, dis));
 		}
+
+		G[0].pb(mp(N + 1, getDistance(start, goal))), G[N + 1].pb(mp(0, getDistance(start, goal)));
 
 		auto ret = dijkstra(0);
 		printf("%.9f\n", ret[N + 1]);
