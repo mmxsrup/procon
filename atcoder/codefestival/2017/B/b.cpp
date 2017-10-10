@@ -20,53 +20,24 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int R, K, H, W;
-
-vector<string> rota(vector<string> v) {
-	int y = v.size(), x = v[0].size();
-	vector<string> ret;
-	rep(i, x){
-		string tmp;
-		rep(j, y) tmp += v[j][i];
-		reverse(all(tmp));
-		ret.pb(tmp);
-	}
-	return ret;
-}
+int n;
+ll d[200100];
+int m;
+ll t[200100];
+map<ll, ll> ma;
 
 int main(void) {
-
-	cin >> R >> K >> H >> W;
-	vector<string> c;
-	rep(i, H) {
-		string d; cin >> d;
-		c.pb(d);
+	cin >> n;
+	rep(i, n)	cin >> d[i];
+	cin >> m;
+	rep(i, m) cin >> t[i];
+	rep(i, n) ma[d[i]]++;
+	bool f = true;
+	rep(i, m) {
+		if(ma[t[i]] > 0) ma[t[i]]--;
+		else f = false;
 	}
-
-	rep(i, R / 90) {
-		c = rota(c);
-	}
-
-	// for(auto u : c) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans1;
-	for(auto u : c) {
-		rep(i, K) ans1.pb(u);
-	}
-
-	// for(auto u : ans1) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans2;
-	for(auto u : ans1) {
-		string tmp;
-		for(auto v : u) {
-			rep(i, K) tmp += v;
-		}
-		ans2.pb(tmp);
-	}
-
-	for(auto u : ans2) cout << u << endl;
+	if(f) printf("YES\n");
+	else printf("NO\n");
 	return 0;
 }

@@ -20,53 +20,32 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int R, K, H, W;
+int N;
+ll L, H;
+ll C[20];
 
-vector<string> rota(vector<string> v) {
-	int y = v.size(), x = v[0].size();
-	vector<string> ret;
-	rep(i, x){
-		string tmp;
-		rep(j, y) tmp += v[j][i];
-		reverse(all(tmp));
-		ret.pb(tmp);
+ll solve(void) {
+	ll ans = 0;
+	for (int mask = 1; mask < (1<<N); ++mask) {
+		ll cnt =  __builtin_popcount(mask);
+		ll lcm = 1;
+		rep(i, N) {
+			if(mask & (1<<i)) lcm = lcm * C[i] / __gcd(lcm, C[i]);
+			if(lcm > H) break;
+		}
+		// printf("lcm %lld\n", lcm);
+		ll tans = (H / lcm) - ((L - 1) / lcm);
+		// printf("tans %lld\n", tans);
+		if(cnt % 2) ans += tans * cnt;
+		else ans -= tans * cnt;
 	}
-	return ret;
+	return ans;
 }
 
 int main(void) {
+	cin >> N >> L >> H;
+	rep(i, N) cin >> C[i];
 
-	cin >> R >> K >> H >> W;
-	vector<string> c;
-	rep(i, H) {
-		string d; cin >> d;
-		c.pb(d);
-	}
-
-	rep(i, R / 90) {
-		c = rota(c);
-	}
-
-	// for(auto u : c) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans1;
-	for(auto u : c) {
-		rep(i, K) ans1.pb(u);
-	}
-
-	// for(auto u : ans1) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans2;
-	for(auto u : ans1) {
-		string tmp;
-		for(auto v : u) {
-			rep(i, K) tmp += v;
-		}
-		ans2.pb(tmp);
-	}
-
-	for(auto u : ans2) cout << u << endl;
+	printf("%lld\n", solve());
 	return 0;
 }

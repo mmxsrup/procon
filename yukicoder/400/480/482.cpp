@@ -20,53 +20,29 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int R, K, H, W;
-
-vector<string> rota(vector<string> v) {
-	int y = v.size(), x = v[0].size();
-	vector<string> ret;
-	rep(i, x){
-		string tmp;
-		rep(j, y) tmp += v[j][i];
-		reverse(all(tmp));
-		ret.pb(tmp);
-	}
-	return ret;
-}
+int N; ll K;
+int D[200100];
+int memo[200100];
 
 int main(void) {
+	cin >> N >> K;
+	rep(i, N) cin >> D[i];
+	rep(i, N) D[i]--;
 
-	cin >> R >> K >> H >> W;
-	vector<string> c;
-	rep(i, H) {
-		string d; cin >> d;
-		c.pb(d);
+	rep(i, N) memo[D[i]] = i;
+	ll cnt = 0;
+	rep(i, N) {
+		if(D[i] == i) continue;
+		// printf("%d %d\n", D[i], D[memo[i]]);
+		int tmp = D[i];
+		swap(D[i], D[memo[i]]);
+		memo[tmp] = memo[i];
+		cnt++;
 	}
+	// printf("cnt %lld\n", cnt);
 
-	rep(i, R / 90) {
-		c = rota(c);
-	}
+	if(K - cnt >= 0 && (K - cnt) % 2 == 0) printf("YES\n");
+	else printf("NO\n");
 
-	// for(auto u : c) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans1;
-	for(auto u : c) {
-		rep(i, K) ans1.pb(u);
-	}
-
-	// for(auto u : ans1) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans2;
-	for(auto u : ans1) {
-		string tmp;
-		for(auto v : u) {
-			rep(i, K) tmp += v;
-		}
-		ans2.pb(tmp);
-	}
-
-	for(auto u : ans2) cout << u << endl;
 	return 0;
 }

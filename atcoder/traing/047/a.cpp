@@ -20,53 +20,18 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int R, K, H, W;
-
-vector<string> rota(vector<string> v) {
-	int y = v.size(), x = v[0].size();
-	vector<string> ret;
-	rep(i, x){
-		string tmp;
-		rep(j, y) tmp += v[j][i];
-		reverse(all(tmp));
-		ret.pb(tmp);
-	}
-	return ret;
-}
+int n, x;
+ll a[22];
 
 int main(void) {
-
-	cin >> R >> K >> H >> W;
-	vector<string> c;
-	rep(i, H) {
-		string d; cin >> d;
-		c.pb(d);
-	}
-
-	rep(i, R / 90) {
-		c = rota(c);
-	}
-
-	// for(auto u : c) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans1;
-	for(auto u : c) {
-		rep(i, K) ans1.pb(u);
-	}
-
-	// for(auto u : ans1) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans2;
-	for(auto u : ans1) {
-		string tmp;
-		for(auto v : u) {
-			rep(i, K) tmp += v;
+	cin >> n >> x;
+	rep(i, n) cin >> a[i];
+	ll ans = 0;
+	rep(i, 20) {
+		if(x & (1<<i)) {
+			ans += a[i];
 		}
-		ans2.pb(tmp);
 	}
-
-	for(auto u : ans2) cout << u << endl;
+	cout << ans << endl;
 	return 0;
 }

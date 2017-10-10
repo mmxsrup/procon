@@ -20,17 +20,14 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int a, b, f, k;
 int main(void) {
-	cin >> a >> b >> f >> k;
-	if(2 * f > b || 2 * (a - f) > b) {
-		printf("-1\n"); return 0;
+	int A, B; cin >> A >> B;
+	set<int> se;
+	rep(i, A + 1)rep(j, B + 1) {
+		int d = i + 5 * j;
+		if(d == 0) continue;
+		se.insert(d);
 	}
-	ll sum = f;
-	rep(i, k) {
-		if(i % 2 == 0) { // いき
-
-		}
-	}
+	for(auto u : se) printf("%d\n", u);
 	return 0;
 }

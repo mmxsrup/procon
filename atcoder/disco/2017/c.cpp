@@ -20,53 +20,26 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int R, K, H, W;
-
-vector<string> rota(vector<string> v) {
-	int y = v.size(), x = v[0].size();
-	vector<string> ret;
-	rep(i, x){
-		string tmp;
-		rep(j, y) tmp += v[j][i];
-		reverse(all(tmp));
-		ret.pb(tmp);
-	}
-	return ret;
-}
-
+int N;
+ll C;
+ll L[100010];
 int main(void) {
-
-	cin >> R >> K >> H >> W;
-	vector<string> c;
-	rep(i, H) {
-		string d; cin >> d;
-		c.pb(d);
-	}
-
-	rep(i, R / 90) {
-		c = rota(c);
-	}
-
-	// for(auto u : c) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans1;
-	for(auto u : c) {
-		rep(i, K) ans1.pb(u);
-	}
-
-	// for(auto u : ans1) cout << u << endl;
-	// printf("\n");
-
-	vector<string> ans2;
-	for(auto u : ans1) {
-		string tmp;
-		for(auto v : u) {
-			rep(i, K) tmp += v;
+	cin >> N >> C;
+	rep(i, N)cin >> L[i];
+	sort(L, L + N);
+	ll ans = N;
+	int l = 0, r = N - 1;
+	while(r  > l) {
+		// printf("l %d r %d\n", l, r);
+		if(L[r] + L[l] + 1 <= C) {
+			ans--;
+			r--;
+			l++;
+		}else {
+			r--;
 		}
-		ans2.pb(tmp);
 	}
-
-	for(auto u : ans2) cout << u << endl;
+	
+	printf("%lld\n", ans);
 	return 0;
 }
