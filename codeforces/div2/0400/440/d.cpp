@@ -20,13 +20,7 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
-
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
-	}
+	
 	return 0;
 }

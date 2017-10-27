@@ -20,13 +20,36 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int n, k;
+ll a[100010];
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	scanf("%d %d", &n, &k);
+	rep(i, n) scanf("%lld", &a[i]);
+
+	if(k == 1) {
+		ll ans = INFF;
+		rep(i, n) chmin(ans, a[i]);
+		printf("%lld\n", ans);
+	}else if(k == 2) {
+		ll ml[100010];
+		ll mr[100010];
+		ml[0] = a[0];
+		reps(i, 1, n) ml[i] = min(ml[i - 1], a[i]);
+		mr[n - 1] = a[n - 1];
+		for (int i = n - 2; i >= 0; --i) {
+			mr[i] = min(mr[i + 1], a[i]);
+		}
+		ll ans = -INFF;
+		rep(i, n - 1) {
+			ll tmp = max(ml[i], mr[i + 1]);
+			chmax(ans, tmp);
+		}
+		cout << ans << endl;
+	}else {
+		ll ans = -INFF;
+		rep(i, n) chmax(ans, a[i]);
+		printf("%lld\n", ans);
 	}
 	return 0;
 }

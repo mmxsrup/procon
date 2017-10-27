@@ -20,23 +20,6 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int n;
-int p[110];
-int dp[110][11000];
-
 int main(void) {
-	cin >> n;
-	rep(i, n) cin >> p[i];
-	dp[0] = 0;
-	rep(i, n) {
-		rep(j, 100000) {
-			if(!dp[i]) continue;
-			dp[i + 1][j] = 1;
-			if(j + p[i] <= 11000) dp[i + 1][j + p[i]] = 1;
-		}
-	}
-	int ans = 0;
-	rep(i, 11000) if(dp[n][i]) ans++;
-	printf("%d\n", ans);
-	return 0;
+	
 }

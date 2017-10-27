@@ -20,13 +20,23 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int n, m, a, b;
+int c[110];
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	cin >> n >> m >> a >> b;
+	rep(i, m) cin >> c[i];
+
+	int ans = -1;
+	int now = n;
+	rep(i, m) {
+		if(now <= a) now += b;
+		if(now < c[i]) {
+			ans = i + 1; break;
+		}
+		now -= c[i];
 	}
+	if(ans == -1) printf("complete\n");
+	else printf("%d\n", ans);
 	return 0;
 }

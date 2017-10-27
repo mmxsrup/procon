@@ -28,7 +28,7 @@ int main(void) {
 	double ans = M;
 	rep(i, N) {
 		ans = ((2.*ans) * (1./3.)) + ((ans+1.) * (1./3.));
-		printf("%f\n", ans);
+		// printf("%f\n", ans);
 	}
 	printf("%.9f\n", ans);
 	return 0;

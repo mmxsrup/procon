@@ -20,13 +20,20 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+
+int N;
+string s;
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	cin >> N >> s;
+
+	/* 3色しかないので, うまくいれることで, それぞれ偶数個のものは全て消せる */
+	int r = 0, g = 0, b = 0;
+	for(auto c : s) {
+		if(c == 'R') r++;
+		else if(c == 'G') g++;
+		else if(c == 'B') b++;
 	}
+	printf("%d\n", r % 2 + g % 2 + b % 2);
 	return 0;
 }

@@ -20,13 +20,14 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
-
+string s;
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	cin >> s;
+	bool f = false;
+	rep(i, s.size() - 1) {
+		if(s.substr(i, 2) == "AC") f = true;
 	}
+	if(f) printf("Yes\n");
+	else printf("No\n");
 	return 0;
 }

@@ -20,13 +20,23 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int n;
+int a[20];
 
-int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+ll cnt = 0;
+void dfs(int idx, ll sum) {
+	if(idx == n){
+		if(sum % 2 == 0)cnt++; return ;
 	}
+	dfs(idx + 1, sum * (a[idx] - 1));
+	dfs(idx + 1, sum * (a[idx]));
+	dfs(idx + 1, sum * (a[idx] + 1));
+
+}
+int main(void) {
+	cin >> n;
+	rep(i, n) cin >> a[i];
+	dfs(0, 1);
+	printf("%lld\n", cnt);
 	return 0;
 }

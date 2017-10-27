@@ -20,13 +20,37 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+
+int n, k, m;
+int a[100010];
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	scanf("%d %d %d", &n, &k, &m);
+	rep(i, n) scanf("%d", &a[i]);
+
+	map<int, int> ma;
+	rep(i, n) ma[a[i] % m]++;
+	int ans, max = 0;
+	for(auto t : ma) {
+		// printf("%d %d\n", t.fi, t.se);
+		if(t.se > max) {
+			max = t.se; ans = t.fi;
+		}
+	}
+	// printf("max %d ans %d\n", max, ans);
+	if(max < k) {
+		printf("No\n");
+	}else{
+		printf("Yes\n");
+		int cnt = 0;
+		rep(i, n) {
+			if(cnt == k) break;
+			if(a[i] % m == ans) {
+				printf("%d ", a[i]);
+				cnt++;
+			}
+		}
+		printf("\n");
 	}
 	return 0;
 }

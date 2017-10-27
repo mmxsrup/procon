@@ -5,11 +5,9 @@ typedef vector<int> vint;
 typedef pair<int,int> pint;
 typedef vector<pint> vpint;
 #define rep(i,n) for(int i=0;i<(n);i++)
-#define REP(i,n) for(int i=n-1;i>=(0);i--)
 #define reps(i,f,n) for(int i=(f);i<(n);i++)
 #define each(it,v) for(__typeof((v).begin()) it=(v).begin();it!=(v).end();it++)
 #define all(v) (v).begin(),(v).end()
-#define eall(v) unique(all(v), v.end())
 #define pb push_back
 #define mp make_pair
 #define fi first
@@ -20,13 +18,21 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+class TCPhoneHomeEasy
+{
+public:
+	int validNumbers(int digits, vector <string> specialPrefixes) {
+		int ans = pow(10, digits);
+		rep(i, specialPrefixes.size()) {
+			ans -= pow(10, digits - specialPrefixes[i].size());
+		}
+		return ans;
+	}
+	
+};
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
-	}
+	TCPhoneHomeEasy tp;
+	printf("%d\n", tp.validNumbers(7,{ "0", "1", "911" }));
 	return 0;
 }

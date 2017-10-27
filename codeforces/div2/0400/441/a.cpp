@@ -20,13 +20,22 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int n, a, b, c;
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	cin >> n >> a >> b >> c;
+	n--;
+	if(n == 0) {
+		printf("0\n"); return 0;
+	}
+
+	int mi = min(a, min(b, c));
+	if(mi == a) {
+		printf("%d\n", n * a);
+	}else if(mi == b) {
+		printf("%d\n", n * b);
+	}else if(mi == c) {
+		printf("%d\n", min(a, b) + (n - 1) * c);
 	}
 	return 0;
 }

@@ -48,6 +48,9 @@ void dfs(int u, int p) {
 			if(X[u] >= X[v])chmin(dp[u][1], dp[v][1]); // u:1 v:1
 		}
 	}
+	if(X[u] >= ) chmin(dp[u][0], dp[v][0]); // u:0 v:0
+	if(X[u] >= dp[v][0]) chmin(dp[u][1], X[v]); // u:1 v:0
+
 	if(!cnt) {
 		// printf("0: %d\n", u);
 		dp[u][0] = dp[u][1] = 0;

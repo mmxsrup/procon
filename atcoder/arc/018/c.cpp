@@ -20,13 +20,15 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int n, m;
+ll x, a, p;
+ll memo[1010][1010];
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	cin >> n >> m;
+	cin >> x >> a >> p;
+	rep(i, n)rep(j, n) {
+		memo[i][j] = (x + a) % p;
 	}
 	return 0;
 }

@@ -20,13 +20,28 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int q;
+ll n[100010];
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	scanf("%d", &q);
+	rep(i, q) scanf("%lld", &n[i]);
+
+	rep(i, q) {
+		ll a = n[i];
+		if(a <= 3) printf("-1\n");
+		else {
+			if(a % 2 == 0) printf("%d\n", a / 4);
+			else {
+				if(a < 9) printf("-1\n");
+				else if(a == 9) printf("1\n");
+				else {
+					ll d = a - 9;
+					if(d < 4) printf("-1\n");
+					else printf("%d\n", 1 + d / 4);
+				}
+			}
+		}
 	}
 	return 0;
 }

@@ -20,13 +20,45 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+string s;
+int n;
+int cntl[30];
+int cntr[30];
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
+	cin >> s;
+	string d;
+	int sum = 0;
+	rep(i, s.size()) {
+		if(s[i] != 'x') d += s[i];
+		else sum++;
 	}
+	// cout << d << endl;
+	bool f = true;
+	rep(i, d.size() / 2) if(d[i] != d[d.size() - 1 - i]) {
+		// printf("%c %c\n", );
+		f = false;
+	}
+	int suml = 0;
+	int tcnt = 0;
+	rep(i, s.size()) {
+		if(tcnt == d.size() / 2) break;
+		if(s[i] == 'x') suml++;
+		else tcnt++;
+	}
+	int ans = 0;
+	int l = 0, r = s.size() - 1;
+	while(r - l > 0) {
+		if(s[l] == s[r]) l++, r--;
+		else if(s[l] == 'x') {
+			ans++;
+			l++;
+		}else {
+			ans++;
+			r--;
+		}
+	}
+	if(f) printf("%d\n", ans);
+	else printf("-1\n");
 	return 0;
 }

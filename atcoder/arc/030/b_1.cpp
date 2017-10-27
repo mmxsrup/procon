@@ -20,13 +20,42 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
-int K, N;
-int dp[1000100];
+int n, x;
+int h[110];
+int a[110], b[110];
+vector<int> G[110];
+bool used[110];
+
+bool dfs(int u, int p) {
+	// printf("%d %d\n", u, p);
+	bool flag = false;
+	for(auto v : G[u]) {
+		if(p == v) continue;
+		flag |= dfs(v, u);
+	}
+	return used[u] = flag | h[u];
+}
+
+int ans = 0;
+void dfs2(int u, int p) {
+	for(auto v : G[u]) {
+		if(p == v) continue;
+		if(!used[v]) continue;
+		ans += 2;
+		dfs2(v, u);
+	}
+}
 
 int main(void) {
-	cin >> N >> K;
-	rep(i, N) {
-		
-	}
+	cin >> n >> x;
+	rep(i, n) cin >> h[i];
+	rep(i, n - 1) cin >> a[i] >> b[i];
+	rep(i, n - 1) a[i]--, b[i]--;
+	rep(i, n - 1) G[a[i]].pb(b[i]), G[b[i]].pb(a[i]);
+
+	x--;
+	dfs(x, -1);
+	dfs2(x, -1);
+	printf("%d\n", ans);
 	return 0;
 }
