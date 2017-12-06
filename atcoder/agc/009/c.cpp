@@ -41,6 +41,12 @@ int main(void) {
 			// printf("2 dp[%d][%d](%lld) = dp[%d][%d](%lld)\n", i, k, dp[i][k], i, j,  dp[i][j]);
 		}
 	}
+	reps(i, 1, N + 1)rep(j, N)rep(k, N) {
+		if(dp[i][j][k] == 0) continue;
+		if(S[i] + A <= S[k]) {
+			(dp[k + 1][])
+		}
+	}
 	ll ans = 0;
 	rep(i, N) (ans += dp[i][N]) %= MOD;
 	rep(j, N) (ans += dp[N][j]) %= MOD;

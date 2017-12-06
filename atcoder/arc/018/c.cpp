@@ -23,12 +23,25 @@ const ll INFF = 1e18;
 int n, m;
 ll x, a, p;
 ll memo[1010][1010];
+ll limit[1010];
 
 int main(void) {
 	cin >> n >> m;
 	cin >> x >> a >> p;
+	vector<int> v(n * m);
 	rep(i, n)rep(j, n) {
 		memo[i][j] = (x + a) % p;
+		x = memo[i][j];
+		v.push_back(memo[i][j]);
+	}
+	sort(all(v));
+	rep(i, n * m) {
+		if(i % m == m - 1) limit[i / m] = v[i];
+	}
+	rep(i, n) {
+		vector<int> no;
+		int l = v[i], r = v[i + 1];
+		rep(j, m) if(!(l <= ))
 	}
 	return 0;
 }

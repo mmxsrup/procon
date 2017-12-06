@@ -41,7 +41,7 @@ int main(void) {
 	}
 
 	ll cnt = B;
-	sort(all(a))
+	sort(all(a));
 	while(1) {
 		a[0] *= A;
 		sort(all(a));

@@ -20,7 +20,10 @@ const int MOD = 1e9 + 7;
 const int INF = 1e9;
 const ll INFF = 1e18;
 
+
 int main(void) {
-	
+	ll a, c; cin >> a >> c;
+	ll b = a ^ c;
+	cout << b << endl;
 	return 0;
 }
